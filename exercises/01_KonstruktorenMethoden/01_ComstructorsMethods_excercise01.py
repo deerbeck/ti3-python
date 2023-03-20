@@ -2,11 +2,11 @@
 t = (1, 1, 2, 3, 5, 8, 13, 21)
 print(t)
 
-#convert t to string
+# convert t to string
 string = str(t)
 print(string)
 
-#string method testing
+# string method testing
 
 s = "das Ist ME1N teext"
 
