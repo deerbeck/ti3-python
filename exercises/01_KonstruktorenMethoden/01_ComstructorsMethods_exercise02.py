@@ -1,33 +1,22 @@
-# starttuple
-t = (1, 1, 2, 3, 5, 8, 13, 21)
-print(t)
+#startlist
+l = ['München', 'Regensburg', 'Augsburg', 'Nürnberg', 'Scheinfurt', 'Bayreuth', 'Ulm']
 
-# convert t to string
-string = str(t)
-print(string)
+#use list methods to learn
 
-# string method testing
-
-s = "das Ist ME1N teext"
-
-print(s)
-print(s.capitalize())
-print(s.count("d"))
-print(s.find("1"))
-print(s.isalpha())
-print("-----")
-print(",".join(list(s)))
-print(s.lower())
-print(s.replace("d", "D"))
-print(s.rsplit())
-print(s.split())
-
-#modified given string to give a proper german sentence
-s = "das Ist ME1N teext"
-
-s = s.lower()
-s = s.replace("d", "D")
-s = s.replace("1", "i")
-s = s + "."
-s = s.replace("tee", "Te")
-print(s)
+#add element to list on the last place
+l.append("append")
+print(l)
+#insert element to list on given index
+l.insert(4,"insert")
+print(l)
+#remove given element from list
+l.remove("Scheinfurt")
+print(l)
+#remove last item of the list and return it
+print(l.pop())
+print(l)
+#return number of occurrences of given value
+print(l.count("Augsburg"))
+#sort list in ascending order
+l.sort()
+print(l)
