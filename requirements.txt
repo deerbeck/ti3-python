@@ -1,0 +1,7 @@
+pytest
+pytest-cov
+radon
+requests
+GitPython
+pytest-order
+junitparser
