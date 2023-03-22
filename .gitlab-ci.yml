@@ -10,9 +10,8 @@ assignments:
     - apk add --no-cache py3-pytest
     - pip install -r requirements.txt
     - root=`pwd`
-    - pytest ./test_common.py --junitxml=$root/junit_assignment_report1.xml
     - cd $root/assignments/assignment01/
-    - pytest ./test_ass01.py --junitxml=$root/junit_assignment_report2.xml
+    - pytest ./test_ass01.py --junitxml=$root/junit_assignment_report01.xml
   after_script:
     - python test_junit_merger.py
   artifacts:

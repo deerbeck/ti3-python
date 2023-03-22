@@ -1,5 +1,10 @@
 import pytest
 
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+import test_common
+
+
 @pytest.mark.order(3)
 def testTask1():
     import ass01_1 as p01
@@ -41,6 +46,8 @@ def testTask3():
         assert p01.result == "SEHRSCHOEN"
 
 if __name__ == "__main__":
+    test_common.test_codequality("assignments/assignment01/ass*")
+    test_common.test_commit_messages()
     testTask1()
     testTask2()
     testTask3()

@@ -4,10 +4,10 @@ import os
 import glob
 
 @pytest.mark.order(1)
-def test_codequality():
+def test_codequality(search_str):
     ncomments = 0
     nloc = 0
-    for filename in glob.glob("assignments/assignment*/ass*"):
+    for filename in glob.glob(search_str):
         with open(filename) as fobj:
             source = fobj.read()
             report =  analyze(source)
@@ -30,5 +30,5 @@ def test_commit_messages():
     assert int(count)>=assignmentCount*5
 
 if __name__ == "__main__":
-    test_codequality()
+    test_codequality("assignments/assignment*/ass*")
     test_commit_messages()
