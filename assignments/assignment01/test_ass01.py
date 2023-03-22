@@ -31,10 +31,8 @@ def test_codequality():
 
 @pytest.mark.order(2)
 def test_commit_messages():
-    import git
     count = get_commit_count_exclude_user("./", "Fabian Flohr")
-
-    assert int(count)>=5
+    assert int(count)>=50
 
 @pytest.mark.order(3)
 def testTask1():
