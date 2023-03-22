@@ -9,7 +9,6 @@ assignments:
     - apk add --no-cache git
     - apk add --no-cache py3-pytest
     - pip install -r requirements.txt
-  after_script:
     - root=`pwd`
     - cd $root/assignments/assignment01/
     - pytest ./test_ass01.py --junitxml=$root/junit_assignment_report01.xml
