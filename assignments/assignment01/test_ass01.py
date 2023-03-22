@@ -1,9 +1,35 @@
 import pytest
-
+import glob
+from radon.raw import analyze
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import test_common
 
+
+@pytest.mark.order(1)
+def test_codequality(search_str):
+    ncomments = 0
+    nloc = 0
+    for filename in glob.glob(search_str):
+        with open(filename) as fobj:
+            source = fobj.read()
+            report =  analyze(source)
+            ncomments+=report.comments
+            nloc+=report.loc
+    print("#comments:",ncomments,"#loc:",nloc, "#comments/#loc:", ncomments / nloc)
+    assert nloc != 0
+    assert ncomments / nloc >= 0.25
+
+@pytest.mark.order(2)
+def test_commit_messages():
+    import git
+    repo = git.Repo("./../../")
+    count = repo.git.rev_list('--count', 'HEAD')
+
+    # num_comments = at least five times the number of handled assignments
+    assignmentCount=1
+    if (os.path.exists("../assignments")):
+        assignmentCount = len(next(os.walk('../assignments'))[1])
+    assert int(count)>=assignmentCount*5
 
 @pytest.mark.order(3)
 def testTask1():
@@ -46,8 +72,8 @@ def testTask3():
         assert p01.result == "SEHRSCHOEN"
 
 if __name__ == "__main__":
-    test_common.test_codequality("assignments/assignment01/ass*")
-    test_common.test_commit_messages()
+    test_codequality("ass*")
+    test_commit_messages()
     testTask1()
     testTask2()
     testTask3()
