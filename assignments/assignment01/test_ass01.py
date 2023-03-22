@@ -6,17 +6,17 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 @pytest.mark.order(1)
-def test_codequality(search_str):
+def test_codequality():
     ncomments = 0
     nloc = 0
-    for filename in glob.glob(search_str):
+    for filename in glob.glob("./ass*"):
         with open(filename) as fobj:
             source = fobj.read()
             report =  analyze(source)
             ncomments+=report.comments
             nloc+=report.loc
-    print("#comments:",ncomments,"#loc:",nloc, "#comments/#loc:", ncomments / nloc)
     assert nloc != 0
+    print("#comments:",ncomments,"#loc:",nloc, "#comments/#loc:", ncomments / nloc)
     assert ncomments / nloc >= 0.25
 
 @pytest.mark.order(2)
@@ -72,7 +72,7 @@ def testTask3():
         assert p01.result == "SEHRSCHOEN"
 
 if __name__ == "__main__":
-    test_codequality("ass*")
+    test_codequality()
     test_commit_messages()
     testTask1()
     testTask2()
