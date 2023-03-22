@@ -1,6 +1,4 @@
 import pytest
-from radon.raw import analyze
-
 
 @pytest.mark.order(3)
 def testTask1():
