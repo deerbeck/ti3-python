@@ -9,10 +9,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def get_commit_count_exclude_user(folder_path, username):
-    cmd = ['git', 'log', '--no-merges', '--pretty=%H', '--author=' + username, '--invert-grep', '--', folder_path]
+
+    cmd = ["git", "log", "--format='%H %an'", "--", folder_path]
+    
     output = subprocess.check_output(cmd).decode('utf-8')
     commits = output.split('\n')
-    return len(commits) - 1
+    flohr_commits = [username in el for el in commits]
+    return len(commits) - sum(flohr_commits) -1
 
 
 @pytest.mark.order(1)
@@ -31,7 +34,7 @@ def test_codequality():
 
 @pytest.mark.order(2)
 def test_commit_messages():
-    count = get_commit_count_exclude_user("./", "Fabdian Flohr")
+    count = get_commit_count_exclude_user("./", "Fabian Flohr")
     assert int(count)>=5
 
 @pytest.mark.order(3)
@@ -75,8 +78,8 @@ def testTask3():
         assert p01.result == "SEHRSCHOEN"
 
 if __name__ == "__main__":
-    test_codequality()
     test_commit_messages()
+    test_codequality()
     testTask1()
     testTask2()
     testTask3()
