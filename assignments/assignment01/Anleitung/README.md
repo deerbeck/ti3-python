@@ -35,7 +35,7 @@ Bei der Abgabe werden die Praktikumsbetreuer nicht nur auf die Funktionalität, 
 1. **Aufgabenstellung** ist funktional **erfüllt**
 2. Die **Testfälle** laufen alle **erfolgreich** durch
 3. **Fragen** zur Lösung und zu Konzepten in Python **müssen beantwortet werden**
-4. Sie haben ausreichend (mehr als 5) **commit Nachrichten** in Git erstellt
+4. Sie haben ausreichend (mehr als 5) **commit Nachrichten** in Git pro Praktikumsaufgabe erstellt. Achtung: es zählen nur die Commits in den jeweiligen Aufgabenordnern.
 5. Der Quelltext besitzt einen **Dokumentationsgrad** von **mindestens 25 %** (Der Dokumentationsgrad bestimmt sich aus der Anzahl der Kommentarzeilen im Quelltext (Zeilen mit #) im Verhältnis zu der Gesamtanzahl Zeilen Quelltext.)
 
 Die Punkte 2), 4) und 5) werden automatisiert ermittelt. Bei dem Gespräch mit dem Praktikumsbetreuer stellen Sie neben Ihrer eigenen Lösung auch die Punkte 4) und 5) eigenständig mit vor.
