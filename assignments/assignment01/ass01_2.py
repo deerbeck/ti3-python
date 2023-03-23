@@ -8,7 +8,7 @@ code1_val = ord(code1)-65
 message1_val = [ord(e)-65 for e in list(message1)]
 
 #decipher given numbercode with listcomprehension (abs(e-code1_val) represents xor)
-result_val = [abs(e ^ code1_val) for e in message1_val]
+result1_val = [abs(e ^ code1_val) for e in message1_val]
 
 #change numbers back to chars and create the resulting string
-result1 = "".join([chr(e+65) for e in result_val])
+result1 = "".join([chr(e+65) for e in result1_val])
