@@ -2,14 +2,27 @@ import pytest
 import glob
 from radon.raw import analyze
 import sys, os
+import subprocess
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+
+
+def get_commit_count_exclude_user(folder_path, username):
+
+    cmd = ["git", "log", "--format='%H %an'", "--", folder_path]
+    
+    output = subprocess.check_output(cmd).decode('utf-8')
+    commits = output.split('\n')
+    flohr_commits = [username in el for el in commits]
+    return len(commits) - sum(flohr_commits) -1
 
 
 @pytest.mark.order(1)
 def test_codequality():
     ncomments = 0
     nloc = 0
-    for filename in glob.glob("./ass*"):
+    for filename in glob.glob("./ass0*"):
         with open(filename) as fobj:
             source = fobj.read()
             report =  analyze(source)
@@ -21,15 +34,8 @@ def test_codequality():
 
 @pytest.mark.order(2)
 def test_commit_messages():
-    import git
-    repo = git.Repo("./../../")
-    count = repo.git.rev_list('--count', 'HEAD')
-
-    # num_comments = at least five times the number of handled assignments
-    assignmentCount=1
-    if (os.path.exists("../assignments")):
-        assignmentCount = len(next(os.walk('../assignments'))[1])
-    assert int(count)>=assignmentCount*5
+    count = get_commit_count_exclude_user("./", "Fabian Flohr")
+    assert int(count)>=5
 
 @pytest.mark.order(3)
 def testTask1():
@@ -72,8 +78,8 @@ def testTask3():
         assert p01.result == "SEHRSCHOEN"
 
 if __name__ == "__main__":
-    test_codequality()
     test_commit_messages()
+    test_codequality()
     testTask1()
     testTask2()
     testTask3()
