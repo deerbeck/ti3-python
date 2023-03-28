@@ -15,6 +15,7 @@ def stat(l : list):
         mean_buf += e
     mean = mean_buf/(len(l))
 
+    #print out calculated values
     print(f"Min: {min}, Max: {max}, Mean: {mean}")
 
 
