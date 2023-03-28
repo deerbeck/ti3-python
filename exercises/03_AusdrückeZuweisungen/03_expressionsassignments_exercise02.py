@@ -1,4 +1,4 @@
-#provided input for exercise 01
+#provided input for exercise 02
 digits = '0123456789'
 
 ##print out given slicing operations:
