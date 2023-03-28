@@ -24,7 +24,7 @@ code_val = [ord(e)-65 for e in code_long]
 message_val = [ord(e)-65 for e in message]
 
 # get result values by using given decipher algorithm
-result_val = [abs(message_val[i] ^ code_val[i]) for i in range(len(message))]
+result_val = [message_val[i] ^ code_val[i] for i in range(len(message))]
 
 # convert values back to chars and return as a given string
 result = "".join([chr(e+65) for e in result_val])
