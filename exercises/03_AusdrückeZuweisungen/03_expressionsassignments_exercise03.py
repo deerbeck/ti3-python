@@ -16,5 +16,3 @@ print(my_list)
 #insert data to specific index
 my_list.insert(6,"6")
 print(my_list)
-
-##testcomment
