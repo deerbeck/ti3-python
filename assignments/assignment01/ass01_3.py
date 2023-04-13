@@ -30,3 +30,5 @@ result_val = [m ^ c for m,c in zip(message_val,code_val)]
 
 # convert values back to chars and return as a given string
 result = "".join([chr(e+65) for e in result_val])
+
+print(result)
