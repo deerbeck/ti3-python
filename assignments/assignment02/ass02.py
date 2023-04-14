@@ -75,57 +75,71 @@ def check_area(area, p0, is_horiz, length, profi_check = False):
                 #check for index out of range because negative indices are not covered by exception
                 if p0[1] + length > columns or p0[0] -1 < 0 or p0[0] +1 > rows or p0[1]-1 < 0:
                     return False
-
+                #loop through area around horizontal ship and check for occupation
                 for i in range(-1, 2):
                     if "X" in area[p0[0]+i][p0[1]-1:(p0[1]+length)+1]:
                         return False
-                    
+            
+            # exception to use EAFP
             except IndexError:
                 return False
         else:
             # check area around vertical positon by looping through each column and row
             try:
-                if area[p0[0]-1][p0[1]] == "X":
+                #check point over vertical ship
+                if p0[0]-1 < 0:
                     return False
-                elif area[p0[0]+length+1][p0[1]] == "X":
-                    return False
-                for i in range(length):
+                # loop through area over under and around ship and check for occupation
+                for i in range(-1, length+1):
                     if 'X' in area[p0[0]+i][p0[1]-1:p0[1]+1]:
                         return False
-                
+            # exception to use EAFP
             except IndexError:
                 return False
 
     else:
-
-        #check validity of row and columnindex
-        if is_horiz:
-            if p0[0] + length > columns:
+        try:
+            #check validity of row and columnindex
+            if p0[0] < 0 or p0[1] < 0:
                 return False
-        else:
-            if p0[1] + length > rows:
-                return False
-            
-        #check for occupation of position by another boat
-        if is_horiz:
-            # check horizontal position using Slicing column
-            if "X" in area[p0[0]][p0[1]:(p0[1]+length)]:
-                return False
-        else:
-            # check vertical position by looping through rows of the area
-            for i in range(length):
-                if area[p0[0]+i][p0[1]] == 'X':
+                       
+            #check for occupation of position by another boat
+            if is_horiz:
+                # check validity of columnindex
+                if p0[1] + length > columns:
                     return False
-        
+                # check horizontal position using Slicing column
+                if "X" in area[p0[0]][p0[1]:(p0[1]+length)]:
+                    return False
+            
+            else:
+                # check validity of rowindex
+                if p0[0]+ length > rows:
+                    return False
+                # check vertical position by looping through rows of the area
+                for i in range(length):
+                    if area[p0[0]+i][p0[1]] == 'X':
+                        return False
+        # exception to use EAFP    
+        except IndexError:
+            return False
     return True
 
 ##testing area:
-test = create_area((4,5))
-test1 = create_area((5,5))
-fill_area(test1, (1,1), True, 3)
-print(check_area(test, (1,1), True, 3))
-print(check_area(test1, (0,0), True, 1,profi_check=True))
-print_area(test1,"Spieler 1")
+# test = create_area((4,5))
+# test1 = create_area((5,5))
+# fill_area(test1, (1,1), True, 3)
+# print(check_area(test, (1,1), True, 3))
+# print(check_area(test1, (0,0), True, 1,profi_check=True))
+# print_area(test1,"Spieler 1")
+
+# m = 7
+# n = 8
+# area = create_area((m, n))
+# fill_area(area, (1, 2), True, 5)
+# fill_area(area, (3, 4), False, 3)
+
+# print(check_area(area, (0, 0), True, 8))
 
 # main in application
 if __name__ == '__main__':
