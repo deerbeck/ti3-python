@@ -1,7 +1,7 @@
 def create_area(size):
     """"Create empty two dimensional array with given size = (rows, colums)"""
-    ## Create empty two dimensional array with given size = (rows, colums)
-    
+    # Create empty two dimensional array with given size = (rows, colums)
+
     # check if size is in given max and min perimiters
     if max(size) > 10 or min(size) < 2:
         return None
@@ -12,7 +12,7 @@ def create_area(size):
 
 def fill_area(area, p0, is_horiz, length):
     """Fill given two dimensional array with Position of the ship of given length and start position as well as considering horizontal or vertical orientation"""
-    ## Fill given two dimensional array with Position of the ship of given length and start position as well as considering horizontal or vertical orientation
+    # Fill given two dimensional array with Position of the ship of given length and start position as well as considering horizontal or vertical orientation
 
     if is_horiz:
         # fill horizontal position using Slice assignemnts on the column
@@ -41,97 +41,62 @@ def print_area(area, title):
 
     print(title)
     print_column_numbers(columns)
-    
-    #loop through area and print out each row
+
+    # loop through area and print out each row
     for i in range(rows):
         print(str(i) + "|" + "".join(area[i]) + "|")
-    
+
     print_column_numbers(columns)
 
 
-def check_area(area, p0, is_horiz, length, profi_check = False):
+def check_area(area, p0, is_horiz, length, profi_check=False):
     """Check that ship of given length can be filled in given position p0"""
-    ## Check that ship of given length can be filled in given position p0
+    # Check that ship of given length can be filled in given position p0
 
     rows, columns = len(area), len(area[0])
 
+    # check for occupation of position by another boat
+    # optional profi_check to account for official rules
 
-    
-    #check for occupation of position by another boat
-    #optional profi_check to account for official rules 
-    if profi_check:
-
-        if is_horiz:
-           pass
-        else:
-            if p0[1] + length > rows:
-                return False
-            
-
-        if is_horiz:
-            # check area around horizontal area by looping through rows over and under needed position
-            #check validity of row and columnindex
-            try:
-                #check for index out of range because negative indices are not covered by exception
-                if p0[1] + length > columns or p0[0] -1 < 0 or p0[0] +1 > rows or p0[1]-1 < 0:
-                    return False
-                #loop through area around horizontal ship and check for occupation
-                for i in range(-1, 2):
-                    if "X" in area[p0[0]+i][p0[1]-1:(p0[1]+length)+1]:
-                        return False
-            
-            # exception to use EAFP
-            except IndexError:
-                return False
-        else:
-            # check area around vertical positon by looping through each column and row
-            try:
-                #check point over vertical ship
-                if p0[0]-1 < 0:
-                    return False
-                # loop through area over under and around ship and check for occupation
-                for i in range(-1, length+1):
-                    if 'X' in area[p0[0]+i][p0[1]-1:p0[1]+1]:
-                        return False
-            # exception to use EAFP
-            except IndexError:
-                return False
-
-    else:
-        try:
-            #check validity of row and columnindex
-            if p0[0] < 0 or p0[1] < 0:
-                return False
-                       
-            #check for occupation of position by another boat
-            if is_horiz:
-                # check validity of columnindex
-                if p0[1] + length > columns:
-                    return False
-                # check horizontal position using Slicing column
-                if "X" in area[p0[0]][p0[1]:(p0[1]+length)]:
-                    return False
-            
-            else:
-                # check validity of rowindex
-                if p0[0]+ length > rows:
-                    return False
-                # check vertical position by looping through rows of the area
-                for i in range(length):
-                    if area[p0[0]+i][p0[1]] == 'X':
-                        return False
-        # exception to use EAFP    
-        except IndexError:
+    try:
+        # check validity of row and columnindex
+        if p0[0] < 0 or p0[1] < 0:
             return False
+            # check for occupation of position by another boat
+        if is_horiz:
+            # check validity of columnindex
+            if p0[1] + length > columns:
+                return False
+        else:
+            # check validity of rowindex
+            if p0[0] + length > rows:
+                return False
+
+        # loop through positions to check for occupation of board
+        for i in range(length):
+            # loop through rows or columns depending on is_horiz
+            row = p0[0] if is_horiz else p0[0] + i
+            col = p0[1] + i if is_horiz else p0[1]
+            if area[row][col] == "X":
+                return False
+        
+        # checking according to offical rulse
+        if profi_check:
+            # loop through positions to check for occupation of board and neighboring ships
+            for j in range(-1, 2):
+                for i in range(-1, length + 1):
+                      # loop through rows or columns depending on is_horiz
+                    row = p0[0] + j if is_horiz else p0[0] + i
+                    col = p0[1] + i if is_horiz else p0[1] + j
+                    if area[row][col] == "X":
+                        return False
+                    
+    # exception to use EAFP
+    except IndexError:
+        return False
+    
     return True
 
-##testing area:
-# test = create_area((4,5))
-# test1 = create_area((5,5))
-# fill_area(test1, (1,1), True, 3)
-# print(check_area(test, (1,1), True, 3))
-# print(check_area(test1, (0,0), True, 1,profi_check=True))
-# print_area(test1,"Spieler 1")
 
 # m = 7
 # n = 8
@@ -139,7 +104,8 @@ def check_area(area, p0, is_horiz, length, profi_check = False):
 # fill_area(area, (1, 2), True, 5)
 # fill_area(area, (3, 4), False, 3)
 
-# print(check_area(area, (0, 0), True, 8))
+# print(check_area(area, (3, 3), True, 3))
+
 
 # main in application
 if __name__ == '__main__':
