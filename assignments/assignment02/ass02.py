@@ -104,32 +104,31 @@ def generate_boat(area, boat_spec):
     ###Generate random new boat with given length = boat_spec in area.
     rows, columns = len(area), len(area[0])
     #set number of trys to generate new boat
-    trys = 5
+    trys = 20
     
-    for i in range(trys):
-        #generate random startingpoint p0
-        p0 = (random.randint(0, rows), random.randint(0, columns))
+    #diferentiate between dict input and int input to use funtion recursively
 
-        #generate random is_horiz value
-        is_horiz = (random.randint(0,1))
+    #loop through specs and generate new boats of given lengths
+    if type(boat_spec) == dict:
+        for (boat_len ,boat_num) in boat_spec.items():
+            for j in range(boat_num):
+                generate_boat(area,boat_len)
 
-        #check if generated boat can fit in area
-        if check_area(area,p0,is_horiz,boat_spec):
-            fill_area(area,p0,is_horiz,boat_spec)
-            break
-        else:
-            continue
+    elif type(boat_spec) == int:
+        for i in range(trys):
+            #generate random startingpoint p0
+            p0 = (random.randint(0, rows), random.randint(0, columns))
 
+            #generate random is_horiz value
+            is_horiz = (random.randint(0,1))
 
-
-# m = 7
-# n = 8
-# area = create_area((m, n))
-# fill_area(area, (1, 2), True, 5)
-# fill_area(area, (3, 4), False, 3)
-
-# print(check_area(area, (3, 3), True, 3))
-
+            #check if generated boat can fit in area
+            if check_area(area,p0,is_horiz,boat_spec):
+                #fill area with given specs using fill_area()
+                fill_area(area,p0,is_horiz,boat_spec)
+                break
+            else:
+                continue
 
 # main in application
 if __name__ == '__main__':
