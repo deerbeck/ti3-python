@@ -1,3 +1,5 @@
+import random
+
 def create_area(size):
     """"Create empty two dimensional array with given size = (rows, colums)"""
     # Create empty two dimensional array with given size = (rows, colums)
@@ -96,6 +98,28 @@ def check_area(area, p0, is_horiz, length, profi_check=False):
         return False
     
     return True
+
+def generate_boat(area, boat_spec):
+    """Generate random new boat with given length = boat_spec in area."""
+    ###Generate random new boat with given length = boat_spec in area.
+    rows, columns = len(area), len(area[0])
+    #set number of trys to generate new boat
+    trys = 5
+    
+    for i in range(trys):
+        #generate random startingpoint p0
+        p0 = (random.randint(0, rows), random.randint(0, columns))
+
+        #generate random is_horiz value
+        is_horiz = (random.randint(0,1))
+
+        #check if generated boat can fit in area
+        if check_area(area,p0,is_horiz,boat_spec):
+            fill_area(area,p0,is_horiz,boat_spec)
+            break
+        else:
+            continue
+
 
 
 # m = 7
