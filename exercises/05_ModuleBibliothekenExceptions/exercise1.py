@@ -5,4 +5,4 @@ with open('exercise1.txt',"r") as my_file:
         if not line:
             break
         print(line)
-    print(my_file.tell())  
+    print(my_file.tell())
