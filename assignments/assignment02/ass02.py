@@ -1,5 +1,6 @@
 import random
 
+
 def create_area(size):
     """"Create empty two dimensional array with given size = (rows, colums)"""
     # Create empty two dimensional array with given size = (rows, colums)
@@ -81,56 +82,64 @@ def check_area(area, p0, is_horiz, length, profi_check=False):
             col = p0[1] + i if is_horiz else p0[1]
             if area[row][col] == "X":
                 return False
-        
+
         # checking according to offical rulse
         if profi_check:
             # loop through positions to check for occupation of board and neighboring ships
             for j in range(-1, 2):
                 for i in range(-1, length + 1):
-                      # loop through rows or columns depending on is_horiz
+                    # loop through rows or columns depending on is_horiz
                     row = p0[0] + j if is_horiz else p0[0] + i
                     col = p0[1] + i if is_horiz else p0[1] + j
                     if area[row][col] == "X":
                         return False
-                    
+
     # exception to use EAFP
     except IndexError:
         return False
-    
+
     return True
+
 
 def generate_boat(area, boat_spec):
     """Generate random new boat with given length = boat_spec in area."""
-    ###Generate random new boat with given length = boat_spec in area.
+    # Generate random new boat with given length = boat_spec in area.
     rows, columns = len(area), len(area[0])
-    #set number of trys to generate new boat
+    # set number of trys to generate new boat
     trys = 20
-    
-    #diferentiate between dict input and int input to use funtion recursively
 
-    #loop through specs and generate new boats of given lengths
+    # diferentiate between dict input and int input to use funtion recursively
+
+    # loop through specs and generate new boats of given lengths
     if type(boat_spec) == dict:
-        for (boat_len ,boat_num) in boat_spec.items():
+        for (boat_len, boat_num) in boat_spec.items():
             for j in range(boat_num):
-                generate_boat(area,boat_len)
+                generate_boat(area, boat_len)
 
     elif type(boat_spec) == int:
         for i in range(trys):
-            #generate random startingpoint p0
+            # generate random startingpoint p0
             p0 = (random.randint(0, rows), random.randint(0, columns))
 
-            #generate random is_horiz value
-            is_horiz = (random.randint(0,1))
+            # generate random is_horiz value
+            is_horiz = random.choice([True, False])
 
-            #check if generated boat can fit in area
-            if check_area(area,p0,is_horiz,boat_spec):
-                #fill area with given specs using fill_area()
-                fill_area(area,p0,is_horiz,boat_spec)
+            # check if generated boat can fit in area
+            if check_area(area, p0, is_horiz, boat_spec):
+                # fill area with given specs using fill_area()
+                fill_area(area, p0, is_horiz, boat_spec)
                 break
-            else:
-                continue
+
 
 # main in application
 if __name__ == '__main__':
-    # replace
-    pass
+    # Testing
+    # generating area
+    # generating boats
+    # printing game area
+    r = 7
+    c = 9
+    area = create_area((r, c))
+    boat_spec = {2: 3, 1: 3, 3: 1}
+    generate_boat(area, boat_spec)
+    print_area(area, "Spieler 1")
