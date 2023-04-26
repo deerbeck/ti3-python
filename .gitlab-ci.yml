@@ -29,14 +29,14 @@ testAss01:
       junit: $CI_BUILDS_DIR/report01.xml
 
 
-# Unit Tests für Versuch1 durchführen
+# Unit Tests für Assignemnt 2 durchführen
 testAss02:
   stage: test
   variables:
     CI_BUILDS_DIR: assignments/assignment02
-#  rules:
-#    - changes:
-#      - "$CI_BUILDS_DIR/*.py"
+  rules:
+    - changes:
+      - "$CI_BUILDS_DIR/*.py"
   script:
     - cd $CI_BUILDS_DIR
     - pytest test_ass02.py --junitxml=report02.xml
@@ -45,4 +45,22 @@ testAss02:
     when: always
     reports:
       junit: $CI_BUILDS_DIR/report02.xml
+
+# Unit Tests für Assignemnt 3 durchführen
+testAss03:
+  stage: test
+  variables:
+    CI_BUILDS_DIR: assignments/assignment03
+#  rules:
+#    - changes:
+#      - "$CI_BUILDS_DIR/*.py"
+  script:
+    - cd $CI_BUILDS_DIR
+    - pytest test_ass03.py --junitxml=report03.xml
+  # JUnit Report
+  artifacts:
+    when: always
+    reports:
+      junit: $CI_BUILDS_DIR/report03.xml
+
 
