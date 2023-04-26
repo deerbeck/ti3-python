@@ -2,7 +2,15 @@ from v3_util import check_time
 import lfubay
 
 # Aufgabe 1: Einlesen der Messwerte
+def read_data(location, val_name):
+	#read in data with the gifen lfubay function
+	lfu = lfubay.LfuBay()
+	data = lfu.metric_data(location, val_name)
 
+	#assign date time and val_name keys to the given values in one line of code
+	data_dict = {'date': [row[0] for row in data], 'time': [row[1] for row in data], val_name : [row[2] for row in data]}
+
+	return data_dict
 
 # Aufgabe 2: Typische Kenndaten der Messungen
 
@@ -43,7 +51,9 @@ def no2_stats(table, year):
 
 if __name__=='__main__':
 	# Aufgabe 1: Einlesen der NO2 und PM10 Daten
-
+	tab_no2 = read_data('München/Lothstraße', 'NO2')
+	tab_pm10 = read_data('München/Lothstraße', 'PM10')
+	print("Test")
 
 	# Aufgabe 2: Ausgabe der Kenndaten
 
