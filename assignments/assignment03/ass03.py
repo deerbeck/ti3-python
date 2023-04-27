@@ -1,7 +1,8 @@
 from v3_util import check_time
 import lfubay
+import numpy as np
 
-# Aufgabe 1: Einlesen der Messwerte
+# Task 1: Reading in the measured values
 def read_data(location, val_name):
 	#read in data with the gifen lfubay function
 	lfu = lfubay.LfuBay()
@@ -12,16 +13,22 @@ def read_data(location, val_name):
 
 	return data_dict
 
-# Aufgabe 2: Typische Kenndaten der Messungen
+# Task 2: Typical characteristics of the measurements
+def stats(table, val_name):
+	#clean up list from any None Values with filter function and lambda function (Every entry will be allowed that is not None)
+	values = list(filter(lambda x: x != None, table[val_name]))
+
+	#return asked tuple in the form of (number of entries, minimum, maximum, mean)
+	return (len(values), min(values), max(values), sum(values)/len(values))
+	
+
+# Task 3: Preparing the merging of two measured value tables
 
 
-# Aufgabe 3: Vorbereitung der Zusammenführung zweier Messwerttabellen
+# Task 5: Merging both measurements into one table
 
 
-# Aufgabe 5: Zusammenführen beider Messungen zu einer Tabelle
-
-
-# Aufgabe 6: NO2 Grenzwerte auswerten
+# Task 6: Evaluate NO2 limit values
 def no2_stats(table, year):
 	# NO2 limit #1
 	data = [[table['date'][i], table['time'][i], table['NO2'][i]] for i,val in enumerate(table['date']) if str(year) in val and table['NO2'][i] is not None]
@@ -50,24 +57,24 @@ def no2_stats(table, year):
 
 
 if __name__=='__main__':
-	# Aufgabe 1: Einlesen der NO2 und PM10 Daten
+	# Task 1: Reading in NO2 and PM10 data
 	tab_no2 = read_data('München/Lothstraße', 'NO2')
 	tab_pm10 = read_data('München/Lothstraße', 'PM10')
 	print("Test")
 
-	# Aufgabe 2: Ausgabe der Kenndaten
+	# Task 2: Output of characteristic data
+	#print("NO2: Anzahl der Messdaten: {}, Minimum: {}, Maximum: {}, Durchschnitt: {}".format(stats(tab_no2, "NO2")[0], stats(tab_no2, "NO2")[1], stats(tab_no2, "NO2")[2], stats(tab_no2, "NO2")[3]))
+	print("PM10: Anzahl der Messdaten: {}, Minimum: {}, Maximum: {}, Durchschnitt: {}".format(stats(tab_pm10, "PM10")[0], stats(tab_pm10, "PM10")[1], stats(tab_pm10, "PM10")[2], stats(tab_pm10, "PM10")[3]))
+	# Task 3: Test add_entry
 
 
-	# Aufgabe 3: Test von add_entry
+	# Task 4 (check_time is in v3_util), Compare indexes
 
 
-	# Aufgabe 4 (check_time ist in v3_util), Vergleiche Indizes
+	# Task 5: Merging the dictionaries
 
 
-	# Aufgabe 5: Zusammenführen der Dictionaries
-
-
-	# Aufgabe 6: Ergebnisse auf Konsole und in Datei ausgeben
+	# Task 6: Output results to console and file
 
 
 
