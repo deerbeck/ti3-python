@@ -38,9 +38,37 @@ def add_entry(table, d, t, val_name0, val_name1, val0, val1):
     table[val_name0].append(val0)
     table[val_name1].append(val1)
 
-    pass
-
 # Task 5: Merging both measurements into one table
+
+
+def merge(data0, data1):
+    # get measuredata names from data_dicts with xor operator
+    val_name0, val_name1 = sorted(list(data0.keys() ^ data1.keys()))
+    # create initial merged_dict with needed keys and lists to be filled
+    merged = {'date': [], 'time': [], val_name0: [], val_name1: []}
+
+    # set starting index for merge-algorithm
+    curr_ndx0 = 0
+    curr_ndx1 = 0
+
+    while(True):
+        try:
+            # loop through indizes and check_time of entry if 'timestamps' are identical add data to merged_dict with add_entry funtcion
+            if check_time(data0, data1, curr_ndx0, curr_ndx1) == 0:
+                add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
+                          val_name1=val_name1, val0=data0[val_name0][curr_ndx0], val1=data1[val_name1][curr_ndx0])
+                curr_ndx1 += 1
+                curr_ndx0 += 1
+            else:
+                # when 'timestamps' are not identical use the return value of check_time to correct wrong index
+                curr_ndx1 += check_time(data0, data1, curr_ndx0, curr_ndx1)
+        # use EAFP to get out of algorithm when all data of one of the data sets is reached
+        except IndexError:
+            break
+
+	# add left over measurement data
+	
+    return merged
 
 
 # Task 6: Evaluate NO2 limit values
@@ -77,7 +105,6 @@ if __name__ == '__main__':
     # Task 1: Reading in NO2 and PM10 data
     tab_no2 = read_data('München/Lothstraße', 'NO2')
     tab_pm10 = read_data('München/Lothstraße', 'PM10')
-    print("Test")
 
     # Task 2: Output of characteristic data
     print("NO2: Anzahl der Messdaten: {}, Minimum: {}, Maximum: {}, Durchschnitt: {}".format(stats(
@@ -90,7 +117,6 @@ if __name__ == '__main__':
     add_entry(weather, '22.11.2019', '8:15', 'temp', 'hygro', '5.5', '54')
     add_entry(weather, '23.11.2019', '8:15', 'temp', 'hygro', '6.0', '65')
     print(weather)
-    
 
     # Task 4 (check_time is in v3_util), Compare indexes
     print(check_time(tab_no2, tab_pm10, 100, 100))
@@ -98,5 +124,6 @@ if __name__ == '__main__':
     print(check_time(tab_no2, tab_pm10, 98, 100))
 
     # Task 5: Merging the dictionaries
+    merge(tab_no2, tab_pm10)
 
     # Task 6: Output results to console and file
