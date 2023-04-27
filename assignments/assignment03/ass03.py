@@ -4,6 +4,7 @@ import numpy as np
 
 # Task 1: Reading in the measured values
 
+
 def read_data(location, val_name):
     # read in data with the gifen lfubay function
     lfu = lfubay.LfuBay()
@@ -16,6 +17,7 @@ def read_data(location, val_name):
     return data_dict
 
 # Task 2: Typical characteristics of the measurements
+
 
 def stats(table, val_name):
     # clean up list from any None Values with filter function and lambda function (Every entry will be allowed that is not None)
@@ -89,7 +91,11 @@ if __name__ == '__main__':
     add_entry(weather, '23.11.2019', '8:15', 'temp', 'hygro', '6.0', '65')
     print(weather)
     
+
     # Task 4 (check_time is in v3_util), Compare indexes
+    print(check_time(tab_no2, tab_pm10, 100, 100))
+    print(check_time(tab_no2, tab_pm10, 100, 98))
+    print(check_time(tab_no2, tab_pm10, 98, 100))
 
     # Task 5: Merging the dictionaries
 
