@@ -1,6 +1,5 @@
 from v3_util import check_time
 import lfubay
-import numpy as np
 
 # Task 1: Reading in the measured values
 
