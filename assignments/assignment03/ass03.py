@@ -33,12 +33,11 @@ def add_entry(table, d, t, val_name0, val_name1, val0, val1):
     table['date'].append(d)
     table['time'].append(t)
 
-    # add corresponding value names
+    # add corresponding value names and add nothing if val = None
     table[val_name0].append(val0)
     table[val_name1].append(val1)
 
 # Task 5: Merging both measurements into one table
-
 
 def merge(data0, data1):
     # get measuredata names from data_dicts with xor operator
@@ -52,17 +51,35 @@ def merge(data0, data1):
 
     while(True):
         try:
+            time_val = check_time(data0, data1, curr_ndx0, curr_ndx1)
             # loop through indizes and check_time of entry if 'timestamps' are identical add data to merged_dict with add_entry funtcion
-            if check_time(data0, data1, curr_ndx0, curr_ndx1) == 0:
+            if time_val == 0:
                 add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
                           val_name1=val_name1, val0=data0[val_name0][curr_ndx0], val1=data1[val_name1][curr_ndx0])
                 curr_ndx1 += 1
                 curr_ndx0 += 1
-            else:
+
+            elif time_val == -1:
+                # only add entry of data0 because it has earlier the earlier timestamp Use None for val1 to append "nothing"
+                add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
+                          val_name1=val_name1, val0=data0[val_name0][curr_ndx0], val1=[])
+                curr_ndx0 += 1
+
+            elif time_val == 1:
+                # only add entry of data1 because it has earlier the earlier timestamp Use None for val0 to append "nothing"
+                add_entry(merged, data1['date'][curr_ndx1], data1['time'][curr_ndx1], val_name0=val_name0,
+                          val_name1=val_name1, val0=None , val1=data1[val_name1][curr_ndx0])
+                curr_ndx1 += 1
+
                 # when 'timestamps' are not identical use the return value of check_time to correct wrong index
-                curr_ndx1 += check_time(data0, data1, curr_ndx0, curr_ndx1)
         # use EAFP to get out of algorithm when all data of one of the data sets is reached
         except IndexError:
+            if curr_ndx0 < len(data0[val_name0]):
+                add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
+                          val_name1=val_name1, val0=data0[val_name0][curr_ndx0:],val1 = None)
+            elif curr_ndx1 < len(data1[val_name1]):
+                add_entry(merged, data1['date'][curr_ndx1], data1['time'][curr_ndx1], val_name0=val_name0,
+                          val_name1=val_name1, val0=None ,val1 = data1[val_name1][curr_ndx1:])
             break
 
 	# add left over measurement data
@@ -114,7 +131,8 @@ if __name__ == '__main__':
     # Task 3: Test add_entry
     weather = {'date': [], 'time': [], 'temp': [], 'hygro': []}
     add_entry(weather, '22.11.2019', '8:15', 'temp', 'hygro', '5.5', '54')
-    add_entry(weather, '23.11.2019', '8:15', 'temp', 'hygro', '6.0', '65')
+    add_entry(weather, '23.11.2019', '8:15', 'temp', 'hygro', '6.0', None)
+    add_entry(weather, '24.11.2019', '8:15', 'temp', 'hygro', '6.4', '65')
     print(weather)
 
     # Task 4 (check_time is in v3_util), Compare indexes
@@ -125,4 +143,15 @@ if __name__ == '__main__':
     # Task 5: Merging the dictionaries
     merge(tab_no2, tab_pm10)
 
+
     # Task 6: Output results to console and file
+    #print out year average to console
+    for year in range(2018,2022):
+        print("{}: {}".format(year,no2_stats(tab_no2, year)))
+    
+    #write data into .csv file
+    with open("Auswertung_NO2_München_Lothstraße_2018-2021.csv", "w") as file:
+        file.write("Jahr;Jährlicher Durchschnitt;Verletzungen Einstundenmittel;Verletzungen 3 Einstundenmittel;Minimum;Maximum\n")
+        for year in range(2018,2022):
+            buffer = [str(e) for e in no2_stats(tab_no2, year)]
+            file.write(f"{year};" + ";".join(buffer) + "\n")
