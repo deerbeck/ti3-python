@@ -9,6 +9,7 @@ def read_data(location, val_name):
     lfu = lfubay.LfuBay()
     data = lfu.metric_data(location, val_name)
 
+    # using this method you get a result approx (0:00:00.027134 - 0:00:00.005667) = 0.021467 ms faster results (and can use 1 line of code)
     # assign date time and val_name keys to the given values in one line of code
     data_dict = {'date': [row[0] for row in data], 'time': [
         row[1] for row in data], val_name: [row[2] for row in data]}
@@ -27,6 +28,7 @@ def stats(table, val_name):
 
 
 # Task 3: Preparing the merging of two measured value tables
+
 
 def add_entry(table, d, t, val_name0, val_name1, val0, val1):
     # add date and time entry to given table dictionary
@@ -54,36 +56,41 @@ def merge(data0, data1):
             time_val = check_time(data0, data1, curr_ndx0, curr_ndx1)
             # loop through indizes and check_time of entry if 'timestamps' are identical add data to merged_dict with add_entry funtcion
             if time_val == 0:
+                #add entry using helpfunction
                 add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
                           val_name1=val_name1, val0=data0[val_name0][curr_ndx0], val1=data1[val_name1][curr_ndx0])
+                #count up each index given definition of merge algorithm
                 curr_ndx1 += 1
                 curr_ndx0 += 1
 
             elif time_val == -1:
                 # only add entry of data0 because it has earlier the earlier timestamp Use None for val1 to append "nothing"
-                add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
-                          val_name1=val_name1, val0=data0[val_name0][curr_ndx0], val1=[])
+                add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0],
+                          val_name0=val_name0, val_name1=val_name1, val0=data0[val_name0][curr_ndx0], val1=[])
+                # only count up index0
                 curr_ndx0 += 1
 
             elif time_val == 1:
                 # only add entry of data1 because it has earlier the earlier timestamp Use None for val0 to append "nothing"
-                add_entry(merged, data1['date'][curr_ndx1], data1['time'][curr_ndx1], val_name0=val_name0,
-                          val_name1=val_name1, val0=None , val1=data1[val_name1][curr_ndx0])
+                add_entry(merged, data1['date'][curr_ndx1], data1['time'][curr_ndx1],
+                          val_name0=val_name0, val_name1=val_name1, val0=None, val1=data1[val_name1][curr_ndx0])
+                # only count up index1
                 curr_ndx1 += 1
 
                 # when 'timestamps' are not identical use the return value of check_time to correct wrong index
         # use EAFP to get out of algorithm when all data of one of the data sets is reached
         except IndexError:
+               # add left over measurement data
             if curr_ndx0 < len(data0[val_name0]):
+                #add remaining entries of left over data0
                 add_entry(merged, data0['date'][curr_ndx0], data0['time'][curr_ndx0], val_name0=val_name0,
-                          val_name1=val_name1, val0=data0[val_name0][curr_ndx0:],val1 = None)
+                          val_name1=val_name1, val0=data0[val_name0][curr_ndx0:], val1=None)
             elif curr_ndx1 < len(data1[val_name1]):
+                #add remaining entries of left over data1
                 add_entry(merged, data1['date'][curr_ndx1], data1['time'][curr_ndx1], val_name0=val_name0,
-                          val_name1=val_name1, val0=None ,val1 = data1[val_name1][curr_ndx1:])
+                          val_name1=val_name1, val0=None, val1=data1[val_name1][curr_ndx1:])
             break
-
-	# add left over measurement data
-	
+        # add left over measurement data
     return merged
 
 
@@ -129,6 +136,7 @@ if __name__ == '__main__':
         tab_pm10, "PM10")[0], stats(tab_pm10, "PM10")[1], stats(tab_pm10, "PM10")[2], stats(tab_pm10, "PM10")[3]))
 
     # Task 3: Test add_entry
+    #creaty dummy dict and add dummy entries
     weather = {'date': [], 'time': [], 'temp': [], 'hygro': []}
     add_entry(weather, '22.11.2019', '8:15', 'temp', 'hygro', '5.5', '54')
     add_entry(weather, '23.11.2019', '8:15', 'temp', 'hygro', '6.0', None)
@@ -136,22 +144,30 @@ if __name__ == '__main__':
     print(weather)
 
     # Task 4 (check_time is in v3_util), Compare indexes
+    # check dict to get used to check_times
     print(check_time(tab_no2, tab_pm10, 100, 100))
     print(check_time(tab_no2, tab_pm10, 100, 98))
     print(check_time(tab_no2, tab_pm10, 98, 100))
 
     # Task 5: Merging the dictionaries
+    # merging both data dicts
     merge(tab_no2, tab_pm10)
 
-
     # Task 6: Output results to console and file
-    #print out year average to console
-    for year in range(2018,2022):
-        print("{}: {}".format(year,no2_stats(tab_no2, year)))
-    
-    #write data into .csv file
+
+    # print out year average to console
+    for year in range(2018, 2022):
+        print("{}: {}".format(year, no2_stats(tab_no2, year)))
+
+    # write data into .csv file
     with open("Auswertung_NO2_München_Lothstraße_2018-2021.csv", "w") as file:
-        file.write("Jahr;Jährlicher Durchschnitt;Verletzungen Einstundenmittel;Verletzungen 3 Einstundenmittel;Minimum;Maximum\n")
-        for year in range(2018,2022):
+        file.write(
+            "Jahr;Jährlicher Durchschnitt;Verletzungen Einstundenmittel;Verletzungen 3 Einstundenmittel;Minimum;Maximum\n")
+        #loop through years and get each no2_stats
+        for year in range(2018, 2022):
+            #store stats in buffer list to easily modify
             buffer = [str(e) for e in no2_stats(tab_no2, year)]
+            #format string on first entry to only 3 significant places
+            buffer[0] = f"{float(buffer[0]):.3f}"
+            #write each line using string formating and joining into csv file
             file.write(f"{year};" + ";".join(buffer) + "\n")
