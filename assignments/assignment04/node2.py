@@ -5,13 +5,14 @@ class Node:
     def __init__(self, name: str) -> None:
 
         # hand over initialized variables
-        self.___name = name
+        self.__name = name
         self.next = [self]
 
+    #getter method for name
     @property
     def name(self):
-        return self.___name
-    
+        return self.__name
+
     def __str__(self) -> str:
         # print out working Tree of node
         if (n := len(self.next)) == 1:
