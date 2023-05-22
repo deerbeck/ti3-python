@@ -1,5 +1,3 @@
-
-# TODO
 class Node:
     # declare id as constant variable for that node
     __id = 0
