@@ -14,20 +14,23 @@ class Node:
             #print out end of working tree when no follow up nodes exist
             return f"{self.name} <end>"
         else:
-            #loop through next nodes and print out working tree of nodes
+            printlist = []
+            #loop through __next nodes and print out working tree of nodes
             for i in range(n-2):
-                print(f"{self.next[i].name} ---> {self.next[i+1].name}")
+                printlist.append(f"{self.next[i].name} ---> {self.next[i+1].name}\n")
             #return last element of working tree formated like below
-            return f"  ---> {self.next[-1].name}"
+            printlist.append(len(self.next[-3].name) * " " + " " + f"---> {self.next[-1].name}")
+            return "".join(printlist)
 
 
 if __name__ == "__main__":
     # testing area
-    n1 = Node('A')
-    n2 = Node('B')
-    n3 = Node('C')
-    n1.next.append(n2)
-    n1.next.append(n3)
-    print(n3.name)
-    print(n1)
-    print(n2)
+    # n1 = Node('A')
+    # n2 = Node('B')
+    # n3 = Node('C')
+    # n1.next.append(n2)
+    # n1.next.append(n3)
+    # print(n3.name)
+    # print(n1)
+    # print(n2)
+    pass

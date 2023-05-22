@@ -19,11 +19,14 @@ class Node:
             #print out end of working tree when no follow up nodes exist
             return f"{self.__name} <end>"
         else:
-            #loop through next nodes and print out working tree of nodes
+            printlist = []
+            #loop through __next nodes and print out working tree of nodes
             for i in range(n-2):
-                print(f"{self.next[i].__name} ---> {self.next[i+1].__name}")
+                printlist.append(f"{self.next[i].__name} ---> {self.next[i+1].__name}\n")
             #return last element of working tree formated like below
-            return f"  ---> {self.next[-1].__name}"
+            printlist.append(len(self.next[-3].__name) * " " + " " + f"---> {self.next[-1].__name}")
+            return "".join(printlist)
+
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ class Node:
         #increment id
         Node.__id += 1
 
-        # hand over initialized variables
+        # hand over initialized variables and set name depending on input
         if name is None:
             self.__name= "Knoten " + str(self.__id)
         else:
@@ -15,17 +15,18 @@ class Node:
 
         self.__next = [self]
 
-
-
-    
     #getter method for name
     @property
     def name(self):
         return self.__name
     
-    #connect nodes through connect method
+    #add nodes with this connect method
     def connect(self, node):
         self.__next.append(node)
+
+    #getter method for nodes
+    def get_connects(self):
+        return tuple(self.__next[1:])
 
 
     def __str__(self) -> str:
@@ -34,11 +35,13 @@ class Node:
             #print out end of working tree when no follow up nodes exist
             return f"{self.__name} <end>"
         else:
+            printlist = []
             #loop through __next nodes and print out working tree of nodes
             for i in range(n-2):
-                print(f"{self.__next[i].__name} ---> {self.__next[i+1].__name}")
+                printlist.append(f"{self.__next[i].__name} ---> {self.__next[i+1].__name}\n")
             #return last element of working tree formated like below
-            return len(self.__next[-3].__name) * " " + " " + f"---> {self.__next[-1].__name}"
+            printlist.append(len(self.__next[-3].__name) * " " + " " + f"---> {self.__next[-1].__name}")
+            return "".join(printlist)
 
 
 if __name__ == "__main__":
