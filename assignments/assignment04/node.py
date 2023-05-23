@@ -30,7 +30,7 @@ class Node:
     # getter method for nodes
 
     def get_connects(self):
-        return tuple(self.__next[1:])
+        return tuple(self.__next)
 
     def __str__(self) -> str:
         # print out working Tree of node
@@ -43,15 +43,11 @@ class Node:
             return self.__name +  f" --{self.__next[0]}--> {self.__next[0].get_connect().name}\n"
         
         else:
-            # get max name listed for easier format use
-            maxformat = max([len(x.get_connect().name) for x in self.__next])
             # fill printlist with first node and its connection
-            printlist = [self.__name +  f" --{self.__next[0]}--> {self.__next[0].get_connect().name}\n"]
+            printlist = [self.__name +  f" --{self.__next[0]}--> {self.__next[0].get_connect().name}"]
             # loop through edges and its connected nodes and add them to the printlist
-            for i in range(1, n-1):
-                printlist.append(f"{self.__next[i-1].get_connect().name} --{self.__next[i]}--> {self.__next[i].get_connect().name}\n")
-            #add last edge and node to printlist
-            printlist.append(maxformat * " " + " " + f"--{self.__next[-1]}--> {self.__next[-1].get_connect().name}")
+            for i in range(1, n):
+                printlist.append("\n" + len(self.__name) * " " + f" --{self.__next[i]}--> {self.__next[i].get_connect().name}")
         
         #join all elements of printlist and return them
         return "".join(printlist)
