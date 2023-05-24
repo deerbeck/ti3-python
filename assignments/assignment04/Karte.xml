@@ -1,4 +1,99 @@
 <map>
+	<node name="Lothstr./Georgenstr.">
+		<next>Lothstraße_Gör_u</next>
+        <next>Georgenstraße_Win</next>
+	</node>
+    <node name="Winzererstr./Georgenstr.">
+		<next>Winzererstraße_Gör_u</next>
+		<next>Georgenstraße_Loth</next>
+	</node>
+    <node name="Winzererstr./Görresstr.">
+		<next>Winzererstraße_Geo</next>
+        <next>Winzererstraße_Sch</next>
+		<next>Görresstraße_Lot</next>
+	</node>
+	<node name="Lothstr./Görresstr.">
+        <next>Lothstraße_Geo</next>
+        <next>Lothstraße_Sch</next>
+        <next>Görresstraße_Win</next>
+        <next>Infanteriestraße</next>
+	</node>
+	<node name="Lothstr./Schellingstr.">
+        <next>Schellingstraße_Cra_o</next>
+        <next>Lothstraße_Gör_o</next>
+        <next>Lothstraße_Hes</next>
+    </node>
+    <node name="Schellingstr./Winzererstr.">
+        <next>Schellingstraße_Cra_u</next>
+        <next>Winzererstraße_Gör_o</next>
+	</node>
+    <node name="Schellingstr./Cranachstr.">
+        <next>Schellingstraße_Lot</next>
+        <next>Schellingstraße_Win</next>
+        <next>Cranachstraße_Hes</next>
+	</node>
+    <node name="Infanteriestraße">
+	</node>
+    <node name="Cranachstraße_Hes">
+	</node>
+    <node name="Lothstaße_Hes">
+    </node>
 
-</map> 
-
+	<edge name="Lothstraße_Gör_u" weight="5">
+		<next>Lothstr./Görresstr.</next>
+	</edge>	
+    <edge name="Georgenstraße_Win" weight="1">
+		<next>Winzererstr./Georgenstr.</next>
+	</edge>	
+    <edge name="Georgenstraße_Loth" weight="1">
+		<next>Lothstr./Georgenstr.</next>
+	</edge>	
+    <edge name="Winzererstraße_Gör_u" weight="5">
+		<next>Winzererstr./Görresstr.</next>
+	</edge>	
+    <edge name="Infanteriestraße" weight="8">
+        <next>Infanteriestraße</next>
+	</edge>	
+    <edge name="Lothstraße_Sch" weight="4">
+		<next>Lothstr./Schellingstr.</next>
+	</edge>	
+    <edge name="Görresstraße_Win" weight="6">
+		<next>Winzererstr./Görresstr.</next>
+	</edge>	
+    <edge name="Lothstraße_Geo" weight="5">
+		<next>Lothstr./Georgenstr.</next>
+	</edge>
+    <edge name="Winzererstraße_Geo" weight="5">
+		<next>Winzererstr./Georgenstr.</next>
+	</edge>	
+    <edge name="Winzererstraße_Sch" weight="6">
+		<next>Schellingstr./Winzererstr.</next>
+	</edge>	
+    <edge name="Lothstraße_Gör_o" weight="4">
+		<next>Lothstr./Görresstr.</next>
+	</edge>	
+    <edge name="Schellingstraße_Cra_o" weight="3">
+		<next>Schellingstr./Cranachstr.</next>
+	</edge>	
+    <edge name="Cranachstraße_Hes" weight="4">
+        <next>Cranachstraße_Hes</next>
+	</edge>	
+    <edge name="Schellingstraße_Lot" weight="3">
+		<next>Lothstr./Schellingstr.</next>
+	</edge>	
+    <edge name="Schellingstraße_Win" weight="5">
+		<next>Schellingstr./Winzererstr.</next>
+	</edge>
+    <edge name="Schellingstraße_Cra_u" weight="5">
+		<next>Schellingstr./Cranachstr.</next>
+	</edge>	
+    <edge name="Görresstraße_Lot" weight="6">
+		<next>Lothstr./Görresstr.</next>
+	</edge>	Lothstraße_Hes
+    <edge name="Lothstraße_Hes" weight="7">
+		<next>Lothstaße_Hes</next>
+	</edge>
+    <edge name="Winzererstraße_Gör_o" weight="6">
+		<next>Winzererstr./Görresstr.</next>
+	</edge>
+</map>

@@ -40,7 +40,7 @@ class Node:
         
         if n == 1:
             #in case of only 1 connection print that connection
-            return self.__name +  f" --{self.__next[0]}--> {self.__next[0].get_connect().name}\n"
+            return self.__name +  f" --{self.__next[0]}--> {self.__next[0].get_connect().name}"
         
         else:
             # fill printlist with first node and its connection
@@ -54,22 +54,22 @@ class Node:
 
 
 if __name__ == "__main__":
-    n1 = Node('A')
-    n2 = Node()
-    n3 = Node('C')
-    n4 = Node('D')
-    e1 = edge.Edge('E', 5)
-    e2 = edge.Edge('F', 2)
-    e3 = edge.Edge('G', 7)
+    # n1 = Node('A')
+    # n2 = Node()
+    # n3 = Node('C')
+    # n4 = Node('D')
+    # e1 = edge.Edge('E', 5)
+    # e2 = edge.Edge('F', 2)
+    # e3 = edge.Edge('G', 7)
     
-    n1.connect(e1)
-    n1.connect(e2)
-    n1.connect(e3)
+    # n1.connect(e1)
+    # n1.connect(e2)
+    # n1.connect(e3)
 
-    e1.connect(n2)
-    e2.connect(n3)
-    e3.connect(n4)
+    # e1.connect(n2)
+    # e2.connect(n3)
+    # e3.connect(n4)
 
-    print(n1)
-    print(n2)
+    # print(n1)
+    # print(n2)
     pass
