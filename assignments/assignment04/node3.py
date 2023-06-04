@@ -45,11 +45,11 @@ class Node:
 
 
 if __name__ == "__main__":
-    n1 = Node()
-    n2 = Node('B')
-    n3 = Node()
-    n1.connect(n2)
-    n1.connect(n3)
-    print(n1)
-    print(n2)
-
+    # n1 = Node()
+    # n2 = Node('B')
+    # n3 = Node()
+    # n1.connect(n2)
+    # n1.connect(n3)
+    # print(n1)
+    # print(n2)
+    pass

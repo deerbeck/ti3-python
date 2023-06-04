@@ -2,7 +2,6 @@ import node
 import edge
 
 class Graph:
-
     def __init__(self) -> None:
         #initialize empty nodes and edges lists
         self.__nodes = []
@@ -37,21 +36,20 @@ class Graph:
 
     @staticmethod
     def find_edge_between(n1,n2):
-        try:
-            ##loop through all edges in n1 and look for a connection to n2 
-            for e in n1.get_connects():
-                if e.get_connect() == n2:
-                    #if connection to n2 is found return connecting edge
-                    return e
-            ##loop through all edges in n2 and look for a connection to n1
-            for e in n2.get_connects():
-                if e.get_connect() == n1:
-                    #if connection to n1 is found return connecting edge
-                    return e
-            #if no connection is found return None
-            return None
-        except AttributeError:
-            return None
+
+        ##loop through all edges in n1 and look for a connection to n2 
+        for e in n1.get_connects():
+            if e.get_connect() == n2:
+                #if connection to n2 is found return connecting edge
+                return e
+        ##loop through all edges in n2 and look for a connection to n1
+        for e in n2.get_connects():
+            if e.get_connect() == n1:
+                #if connection to n1 is found return connecting edge
+                return e
+        #if no connection is found return None
+        return None
+
     
     def path_length(self, path_node_names):
         #initialize pathlength to 0
@@ -106,14 +104,16 @@ if __name__ == "__main__":
     # e2 = g.new_edge('F', 8)
     # e3 = g.new_edge('G', 2)
     # e4 = g.new_edge('H', 6)
+    
     # n1.connect(e1)
     # n2.connect(e2)
     # n3.connect(e3)
     # n4.connect(e4)
-    
+
     # e1.connect(n2)
     # e2.connect(n3)
     # e3.connect(n4)
     # e4.connect(n5)
-    # print(g.path_length(["A","C","D","E"]))
+    # print(g)
+    # print(g.path_length(["A","B","B","E"]))
     pass

@@ -89,7 +89,7 @@
 	</edge>	
     <edge name="Görresstraße_Lot" weight="6">
 		<next>Lothstr./Görresstr.</next>
-	</edge>	Lothstraße_Hes
+	</edge>
     <edge name="Lothstraße_Hes" weight="7">
 		<next>Lothstaße_Hes</next>
 	</edge>

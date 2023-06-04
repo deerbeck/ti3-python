@@ -34,4 +34,4 @@ if __name__ == "__main__":
     n1 = Node('A')
     print(n1.name)
     n1.name = 'B'      # die Zeile soll zu einem Fehler führen!
-
+    pass

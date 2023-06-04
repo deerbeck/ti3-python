@@ -45,6 +45,7 @@ class Node:
         else:
             # fill printlist with first node and its connection
             printlist = [self.__name +  f" --{self.__next[0]}--> {self.__next[0].get_connect().name}"]
+            
             # loop through edges and its connected nodes and add them to the printlist
             for i in range(1, n):
                 printlist.append("\n" + len(self.__name) * " " + f" --{self.__next[i]}--> {self.__next[i].get_connect().name}")
