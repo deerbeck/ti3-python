@@ -21,8 +21,7 @@ def get_commit_count_exclude_user(folder_path, username):
 def test_codequality():
     ncomments = 0
     nloc = 0
-    files_grabbed = [glob.glob(e) for e in ["./node*", "./edge.py", "./graph.py"]]
-                     
+    files_grabbed = glob.glob("./node*") + glob.glob("./edge.py") + glob.glob("./graph.py")
     for filename in files_grabbed:
         with open(filename) as fobj:
             source = fobj.read()
