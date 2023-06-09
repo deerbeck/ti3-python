@@ -17,7 +17,7 @@ class Roommanagement():
         for room in self.__rooms:
             if room.room_number == room_number:
                 print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
-                return None
+                return -1
         self.__rooms.append(closet := rooms.Abstellraum(
             room_number, capacity, area))
         return closet
@@ -27,7 +27,7 @@ class Roommanagement():
         for room in self.__rooms:
             if room.room_number == room_number:
                 print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
-                return None
+                return -1
         self.__rooms.append(classroom := rooms.Vorlesungsraum(
             room_number, capacity, presentation_medium))
         return classroom
@@ -37,7 +37,7 @@ class Roommanagement():
         for room in self.__rooms:
             if room.room_number == room_number:
                 print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
-                return None
+                return -1
         self.__rooms.append(
             meetingroom := rooms.Meetingraum(room_number, capacity))
         return meetingroom
@@ -55,15 +55,15 @@ class Roommanagement():
                 if room == room_number:
                     print(f"Raum {room.room_number} wurde entfernt.")
                     self.__rooms.remove(room)
-                    return room
+                    return 1
         else:
             for room in self.__rooms:
                 if room.room_number == room_number:
                     print(f"Raum {room.room_number} wurde entfernt.")
                     self.__rooms.remove(room)
-                    return room
+                    return 1
         print("Raum nicht vorhanden.")
-        return None
+        return -1
 
     # book room in Roommanagement
     def book_room(self, room_number, customer):

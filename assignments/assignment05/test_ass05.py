@@ -40,6 +40,7 @@ def test_commit_messages():
 
 def test_rooms():
     import ass05_rooms
+    print("Test zu den Raumklassen")
     meeting_1 = ass05_rooms.Meetingraum("R0.001", 20)
     closet_1 = ass05_rooms.Abstellraum("R0.002",10, 20)
     classroom_1 = ass05_rooms.Vorlesungsraum("R0.003", 10, "Tafel")
@@ -55,6 +56,7 @@ def test_rooms():
 
 def test_customer():
     import ass05_customer
+    print("Test zur Kundenklasse")
 
     customer_1 = ass05_customer.Kunde("Johannes Hirschbeck", "Johannes.Hirschbeck@hm.edu")
     customer_2 = ass05_customer.Kunde("Franz Huber", "Franz.Huber@hm.edu")
@@ -67,27 +69,35 @@ def test_roommanagement_adding_removing():
     import ass05_roommanagement
     import ass05_rooms
     import ass05_customer
-
+    print("Teste hinzufügen/entfernen von Räumen im Raummanagement")
     RM = ass05_roommanagement.Roommanagement()
-    meeting_1 = ass05_rooms.Meetingraum("R0.001", 20)
-    closet_1 = ass05_rooms.Abstellraum("R0.002", 10, 20)
-    classroom_1 = ass05_rooms.Vorlesungsraum("R0.003", 10, "Tafel")
+    meeting_1 = RM.new_meetingroom("R0.001", 20)
+    closet_1 = RM.new_closet("R0.002", 10, 20)
+    classroom_1 = RM.new_classroom("R0.003", 10, "Tafel")
+    classroom_2 = RM.new_classroom("R0.004", 20, "Projektor")
+    
+    assert isinstance(classroom_1, ass05_rooms.Vorlesungsraum)
+    assert isinstance(classroom_2, ass05_rooms.Vorlesungsraum)
+    assert isinstance(closet_1, ass05_rooms.Abstellraum)
+    assert isinstance(meeting_1, ass05_rooms.Meetingraum)
 
-    customer1 = ass05_customer.Kunde("Johannes Hirschbeck", "johannes.hirschbeck@hm.edu")
+    classroom_3 = RM.new_classroom("R0.003", 15, "Projektor")
+    closet_2 = RM.new_closet("R0.002", 10, 20)    
+    meeting_2 = RM.new_meetingroom("R0.001", 20)
 
-    RM.add_room(meeting_1)
-    RM.add_room(closet_1)
-    RM.remove_room(classroom_1)
-    RM.book_room("R0.001", customer1)
-    RM.book_room("R0.001", customer1)
+    assert classroom_3 == -1
+    assert closet_2 == -1
+    assert meeting_2 == -1
 
-    print(RM)
-    RM.unbook_room("R0.001")
-    print(RM)
+    assert RM.remove_room("R0.001") == 1
+    assert RM.remove_room(meeting_1) == -1
+    assert RM.remove_room(closet_1)
 
 
 if __name__ == "__main__":
     test_codequality()
     test_commit_messages()
-    
+
     test_customer()
+    test_rooms()
+    test_roommanagement_adding_removing()
