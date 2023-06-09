@@ -25,3 +25,17 @@ class Kunde():
     @mail_address.setter
     def mail_address(self, mail_address):
         self.__mail_address = mail_address
+
+    def __str__(self) -> str:
+        print_buffer = f"Kundenname: {self.__name}\n"
+        print_buffer += f"Kundenkontakt: {self.__mail_address}\n"
+        return print_buffer
+
+if __name__ == "__main__":
+    customer_1 = Kunde("Johannes Hirschbeck", "Johannes.Hirschbeck@hm.edu")
+    customer_2 = Kunde("Franz Huber", "Franz.Huber@hm.edu")
+
+    print(customer_1)
+    print(customer_2)
+
+    pass
