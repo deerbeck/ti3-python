@@ -93,6 +93,34 @@ def test_roommanagement_adding_removing():
     assert RM.remove_room(meeting_1) == -1
     assert RM.remove_room(closet_1)
 
+def test_roommanagement_booking():
+    import ass05_roommanagement
+    import ass05_rooms
+    import ass05_customer
+    print("Teste buchen/freigeben von Räumen im Raummanagement")
+    RM = ass05_roommanagement.Roommanagement()
+    meeting_1 = RM.new_meetingroom("R0.001", 20)
+    closet_1 = RM.new_closet("R0.002", 10, 20)
+    classroom_1 = RM.new_classroom("R0.003", 10, "Tafel")
+    classroom_2 = RM.new_classroom("R0.004", 20, "Projektor")
+
+    customer_1 = ass05_customer.Kunde("Johannes Hirschbeck", "Johannes.Hirschbeck@hm.edu")
+    customer_2 = ass05_customer.Kunde("Franz Huber", "Franz.Huber@hm.edu")
+
+    assert RM.book_room("R0.001", customer_1) == 1
+    assert RM.book_room("R0.001", customer_1) == -1
+    assert RM.book_room("R0.002", customer_2) == 1
+    assert RM.book_room(classroom_1, customer_1) == 1
+
+    assert str(RM) == 'Vorlesungsräume: \n-------------\nRaumnummer: R0.003\nRaumtyp: Vorlesungsraum\nKapazität: 10\nVerfügbarkeit: gebucht\n   --> Gebucht von: Johannes Hirschbeck\nPräsentationsmedium: Tafel\n\nRaumnummer: R0.004\nRaumtyp: Vorlesungsraum\nKapazität: 20\nVerfügbarkeit: verfügbar\nPräsentationsmedium: Projektor\n\nMeetingräume: \n-------------\nRaumnummer: R0.001\nRaumtyp: Meetingraum\nKapazität: 20\nVerfügbarkeit: gebucht\n   --> Gebucht von: Johannes Hirschbeck\n\nAbstellräume: \n-------------\nRaumnummer: R0.002\nRaumtyp: Abstellraum\nKapazität: 10\nVerfügbarkeit: gebucht\n   --> Gebucht von: Franz Huber\nFläche: 20\n\n'
+
+    assert RM.unbook_room("R0.001") == 1
+    assert RM.unbook_room("R1.000") == -1
+    assert RM.unbook_room("R0.002") == 1
+    assert RM.unbook_room("R0.003") == 1
+    
+
+
 
 if __name__ == "__main__":
     test_codequality()

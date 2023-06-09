@@ -142,19 +142,17 @@ class Roommanagement():
 
 if __name__ == "__main__":
     RM = Roommanagement()
-    meeting_1 = rooms.Meetingraum("R0.001", 20)
-    closet_1 = rooms.Abstellraum("R0.002", 10, 20)
-    classroom_1 = rooms.Vorlesungsraum("R0.003", 10, "Tafel")
+    meeting_1 = RM.new_meetingroom("R0.001", 20)
+    closet_1 = RM.new_closet("R0.002", 10, 20)
+    classroom_1 = RM.new_classroom("R0.003", 10, "Tafel")
+    classroom_2 = RM.new_classroom("R0.004", 20, "Projektor")
 
-    customer1 = customer.Kunde("Johannes Hirschbeck", "johannes.hirschbeck@hm.edu")
+    customer_1 = customer.Kunde("Johannes Hirschbeck", "Johannes.Hirschbeck@hm.edu")
+    customer_2 = customer.Kunde("Franz Huber", "Franz.Huber@hm.edu")
 
-    RM.add_room(meeting_1)
-    RM.add_room(closet_1)
-    RM.remove_room(classroom_1)
-    RM.book_room("R0.001", customer1)
-    RM.book_room("R0.001", customer1)
+    RM.book_room("R0.001", customer_1)
+    RM.book_room("R0.001", customer_1)
+    RM.book_room("R0.002", customer_2)
+    RM.book_room("R0.003", customer_1)
 
     print(RM)
-    RM.unbook_room("R0.001")
-    print(RM)
-    test = 0
