@@ -8,11 +8,12 @@ class Raum(ABC):
     # initialize abstract room object with needed information
     @abstractmethod
     def __init__(self, room_number: str, capacity: int) -> None:
-
+        #initializer properties of default room
         self.room_number = room_number
         self.capacity = capacity
         self.availability = "verfügbar"
         self.customer = None
+        self.__room_type = type(self).__name__
 
     # setter/gettter room_number
     @property
@@ -53,14 +54,17 @@ class Raum(ABC):
 
     # return room properties
     def __str__(self):
+        #prepare default properties for printout
         room_properties = f"Raumnummer: {self.__room_number}\n"
-        room_properties += f"Raumtyp: {type(self).__name__}\n"
+        room_properties += f"Raumtyp: {self.__room_type}\n"
         room_properties += f"Kapazität: {self.__capacity}\n"
         room_properties += f"Verfügbarkeit: {self.__availability}\n"
         if self.__availability == "gebucht":
+            #only print out when room is actually booked
             room_properties += f"   --> Gebucht von: {self.__customer.name}\n"
 
-        return room_properties
+        #finally print out properties
+        return room_properties  
 
 
 class Abstellraum(Raum):
@@ -81,6 +85,7 @@ class Abstellraum(Raum):
 
     #return room properties
     def __str__(self):
+        #add "Abstellraum" specific attribute to printout
         room_properties = f"Fläche: {self.__area}\n"
         return super().__str__() + room_properties
 
@@ -102,6 +107,7 @@ class Vorlesungsraum(Raum):
 
     #return room properties
     def __str__(self):
+        #add "Vorlesungsraum" specific attribute to printout
         room_properties = f"Präsentationsmedium: {self.__presentation_medium}\n"
         return super().__str__() + room_properties
 
@@ -114,10 +120,10 @@ class Meetingraum(Raum):
 
 
 if __name__ == "__main__":
-    meeting_1 = Meetingraum("R0.001", 20)
-    closet_1 = Abstellraum("R0.002",10, 20)
-    classroom_1 = Vorlesungsraum("R0.003", 10, "Tafel")
-    print(meeting_1)
-    print(closet_1)
-    print(classroom_1)
-    test = 0
+    # meeting_1 = Meetingraum("R0.001", 20)
+    # closet_1 = Abstellraum("R0.002",10, 20)
+    # classroom_1 = Vorlesungsraum("R0.003", 10, "Tafel")
+    # print(meeting_1)
+    # print(closet_1)
+    # print(classroom_1)
+    pass
