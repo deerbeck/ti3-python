@@ -26,6 +26,9 @@ def test_codequality():
             report =  analyze(source)
             ncomments+=report.comments
             nloc+=report.loc
+            nloc -= report.multi
+            nloc -= report.blank
+
     assert nloc != 0
     print("#comments:",ncomments,"#loc:",nloc, "#comments/#loc:", ncomments / nloc)
     assert ncomments / nloc >= 0.25
@@ -35,9 +38,22 @@ def test_commit_messages():
     count = get_commit_count_exclude_user("./", "Fabian Flohr")
     assert int(count)>=5
 
+def test_rooms_class():
+    import ass05_rooms
+    meeting_1 = ass05_rooms.Meetingraum("R0.001", 20)
+    closet_1 = ass05_rooms.Abstellraum("R0.002",10, 20)
+    classroom_1 = ass05_rooms.Vorlesungsraum("R0.003", 10, "Tafel")
 
+    assert str(meeting_1.room_number) == "R0.001"
+    assert str(closet_1.room_number) == "R0.002"
+    assert str(classroom_1.room_number) == "R0.003"
+
+    assert str(meeting_1) == "Raumnummer: R0.001\nRaumtyp: Meetingraum\nKapazität: 20\nVerfügbarkeit: verfügbar\n"
+    assert str(closet_1) == "Raumnummer: R0.002\nRaumtyp: Abstellraum\nKapazität: 10\nVerfügbarkeit: verfügbar\nFläche: 20\n"
+    assert str(classroom_1) == "Raumnummer: R0.003\nRaumtyp: Vorlesungsraum\nKapazität: 10\nVerfügbarkeit: verfügbar\nPräsentationsmedium: Tafel\n"
 
 
 if __name__ == "__main__":
     test_codequality()
     test_commit_messages()
+    test_rooms_class()

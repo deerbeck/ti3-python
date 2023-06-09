@@ -1,2 +1,3 @@
-import ass05_rooms as rooms
-import ass05_roommanagement as roommanagement
+from ass05_rooms import *
+from ass05_roommanagement import *
+from ass05_customer import *

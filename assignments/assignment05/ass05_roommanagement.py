@@ -1,94 +1,160 @@
 # Projekt Raumverwaltungssystem
 
 from abc import ABC, abstractmethod
+import ass05_rooms as rooms
+import ass05_customer as customer
 
 
-class Raum(ABC):
-    # initialize abstract room object with needed information
-    def __init__(self, room_number: str, capacity: int) -> None:
+class Roommanagement():
+    """Raumverwaltungsobjekt um Räume einzusehen, hinzuzufügen sowie zu entfernen."""
 
-        self.room_number = room_number
-        self.capacity = capacity
-        self.availability = "available"
+    def __init__(self) -> None:
+        self.__rooms = []
+        pass
 
-    # setter/gettter room_number
+    # create new closet
+    def new_closet(self, room_number: str, capacity: int, area: int) -> rooms.Abstellraum:
+        for room in self.__rooms:
+            if room.room_number == room_number:
+                print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
+                return None
+        self.__rooms.append(closet := rooms.Abstellraum(
+            room_number, capacity, area))
+        return closet
 
-    @property
-    def room_number(self):
-        return self.__room_number
+    # create new classroom
+    def new_classroom(self, room_number: str, capacity: int, presentation_medium: int) -> rooms.Vorlesungsraum:
+        for room in self.__rooms:
+            if room.room_number == room_number:
+                print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
+                return None
+        self.__rooms.append(classroom := rooms.Vorlesungsraum(
+            room_number, capacity, presentation_medium))
+        return classroom
 
+    # create new meetingroom
+    def new_meetingroom(self, room_number: str, capacity: int) -> rooms.Meetingraum:
+        for room in self.__rooms:
+            if room.room_number == room_number:
+                print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
+                return None
+        self.__rooms.append(
+            meetingroom := rooms.Meetingraum(room_number, capacity))
+        return meetingroom
 
-    @room_number.setter
-    def room_number(self, room_number: str):
-        self.__room_number = room_number
+    # add external created room-object to Roommanagement
+    def add_room(self, room):
+        self.__rooms.append(room)
 
-    # setter/gettter capacity
+    # remove room from Roommanagement
+    def remove_room(self, room_number):
+        # can either enter "room_number" or room object that should be removed
+        # "room_number" can be object of a room as well
+        if type(room_number) != str:
+            for room in self.__rooms:
+                if room == room_number:
+                    print(f"Raum {room.room_number} wurde entfernt.")
+                    self.__rooms.remove(room)
+                    return room
+        else:
+            for room in self.__rooms:
+                if room.room_number == room_number:
+                    print(f"Raum {room.room_number} wurde entfernt.")
+                    self.__rooms.remove(room)
+                    return room
+        print("Raum nicht vorhanden.")
+        return None
 
-    @property
-    def capacity(self):
-        return self.__capacity
+    # book room in Roommanagement
+    def book_room(self, room_number, customer):
+        # can either enter "room_number" or room object that should be booked
+        # "room_number" can be object of a room as well
+        if type(room_number) != str:
+            # check if room is already booked
+            if room_number.availability == "gebucht":
+                print(f"Raum {room_number.room_number} bereits belegt.")
+                return -1
+            
+            # book room otherwise
+            room_number.availability = "gebucht"
+            room_number.customer = customer
+            print(f"Raum {room_number.room_number} erfolgreich von {customer.name} gebucht.")
+            return 1
 
+        else:
+            for room in self.__rooms:
+                if room.room_number == room_number:
+                    # check if room is already booked
+                    if room.availability == "gebucht":
+                        print(f"Raum {room.room_number} bereits belegt.")
+                        return -1
+                    
+                    # book room otherwise
+                    room.availability = "gebucht"
+                    room.customer = customer
+                    print(f"Raum {room.room_number} erfolgreich von {customer.name} gebucht.")
+                    return 1
 
-    @capacity.setter
-    def capacity(self, capacity: int):
-        self.__capacity = capacity
+        print("Raum nicht vorhanden.")
+        return -1
 
-    # setter/gettter availability
+    # unbook room in Roommanagement
+    def unbook_room(self, room_number):
+        # can either enter "room_number" or room object that should be booked
+        # "room_number" can be object of a room as well
+        if type(room_number) != str:
+            room_number.availability = "verfügbar"
+            room_number.customer = None
+            print(f"Raum {room_number.room_number} ist jetzt frei.")
+            return 1
+        else:
+            for room in self.__rooms:
+                if room.room_number == room_number:
+                    room.availability = "verfügbar"
+                    room.customer = None
+                    print(f"Raum {room.room_number} ist jetzt frei.")
+                    return 1
+        print("Raum nicht vorhanden.")
+        return -1
 
-    @property
-    def availability(self):
-        return self.__availability
+    # return all managed rooms and the respective properties
 
+    def __str__(self) -> str:
+        closets = "Abstellräume: \n-------------\n"
+        classrooms = "Vorlesungsräume: \n-------------\n"
+        meetings = "Meetingräume: \n-------------\n"
+        closets_available = 0
+        classroomes_available = 0
+        meetings_available = 0
 
-    @availability.setter
-    def availability(self, availability: str):
-        self.__availability = availability
-
-    # return room properties
-
-    def __str__(self):
-        room_properties = f"Raumnummer: {self.__room_number}\n"
-        room_properties += f"Kapazität: {self.__capacity}\n"
-        room_properties += f"Verfügbarkeit: {self.__availability}\n"
-        return room_properties
-
-
-class Abstellraum(Raum):
-    def __init__(self, room_number: str, capacity: int, area: int) -> None:
-        super().__init__(room_number, capacity)
-        self.area = area
-
-    # setter/getter area
-    @property
-    def area(self):
-        return self.__area
-
-    @area.setter
-    def area(self, area: int):
-        self.__area = area
-
-class Vorlesungsraum(Raum):
-    def __init__(self, room_number: str, capacity: int, presentation_medium) -> None:
-        super().__init__(room_number, capacity)
-        self.presentation_medium = presentation_medium
-
-    # setter/getter presentation_medium
-    @property
-    def presentation_medium(self):
-        return self.__presentation_medium
-
-    @presentation_medium.setter
-    def area(self, presentation_medium: int):
-        self.__presentation_medium = presentation_medium
-
-
-class Meetingraum(Raum):
-    def __init__(self, room_number: str, capacity: int) -> None:
-        super().__init__(room_number, capacity)
+        for rooms in self.__rooms:
+            if type(rooms).__name__ == "Abstellraum":
+                closets += str(rooms) + "\n"
+                closets_available = 1
+            elif type(rooms).__name__ == "Vorlesungsraum":
+                classrooms += str(rooms) + "\n"
+                classroomes_available = 1
+            elif type(rooms).__name__ == "Meetingraum":
+                meetings += str(rooms) + "\n"
+                meetings_available = 1
+        return classrooms * classroomes_available + meetings * meetings_available + closets * closets_available
 
 
 if __name__ == "__main__":
-    meeting_1 = Meetingraum("R0.001", 20)
-    room1 = Raum("R0.002", 40)
+    RM = Roommanagement()
+    meeting_1 = rooms.Meetingraum("R0.001", 20)
+    closet_1 = rooms.Abstellraum("R0.002", 10, 20)
+    classroom_1 = rooms.Vorlesungsraum("R0.003", 10, "Tafel")
+
+    customer1 = customer.Kunde("Johannes Hirschbeck", "johannes.hirschbeck@hm.edu")
+
+    RM.add_room(meeting_1)
+    RM.add_room(closet_1)
+    RM.remove_room(classroom_1)
+    RM.book_room("R0.001", customer1)
+    RM.book_room("R0.001", customer1)
+
+    print(RM)
+    RM.unbook_room("R0.001")
+    print(RM)
     test = 0
-    
