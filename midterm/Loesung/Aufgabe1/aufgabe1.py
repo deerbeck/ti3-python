@@ -32,4 +32,6 @@ if __name__ == '__main__':
     # Option 2
     psystem_vert = list(zip(*psystem))
     ea = [elem for elem in psystem_vert[1] if elem.endswith('a')]
+
+    print(ea)
     
