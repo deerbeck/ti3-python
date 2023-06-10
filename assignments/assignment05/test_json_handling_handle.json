@@ -1,0 +1,54 @@
+{
+    "_Roommanagement__rooms": [
+        {
+            "_Raum__room_number": "R0.001",
+            "_Raum__capacity": 20,
+            "_Raum__availability": "gebucht",
+            "_Raum__customer": {
+                "_Kunde__name": "Johannes Hirschbeck",
+                "_Kunde__mail_address": "Johannes.Hirschbeck@hm.edu"
+            },
+            "_Raum__room_type": "Meetingraum"
+        },
+        {
+            "_Raum__room_number": "R0.002",
+            "_Raum__capacity": 10,
+            "_Raum__availability": "gebucht",
+            "_Raum__customer": {
+                "_Kunde__name": "Franz Huber",
+                "_Kunde__mail_address": "Franz.Huber@hm.edu"
+            },
+            "_Raum__room_type": "Abstellraum",
+            "_Abstellraum__area": 20
+        },
+        {
+            "_Raum__room_number": "R0.003",
+            "_Raum__capacity": 10,
+            "_Raum__availability": "verf\u00fcgbar",
+            "_Raum__customer": null,
+            "_Raum__room_type": "Vorlesungsraum",
+            "_Vorlesungsraum__presentation_medium": "Tafel"
+        },
+        {
+            "_Raum__room_number": "R0.004",
+            "_Raum__capacity": 20,
+            "_Raum__availability": "gebucht",
+            "_Raum__customer": {
+                "_Kunde__name": "Johannes Hirschbeck",
+                "_Kunde__mail_address": "Johannes.Hirschbeck@hm.edu"
+            },
+            "_Raum__room_type": "Vorlesungsraum",
+            "_Vorlesungsraum__presentation_medium": "Projektor"
+        }
+    ],
+    "_Roommanagement__customers": [
+        {
+            "_Kunde__name": "Johannes Hirschbeck",
+            "_Kunde__mail_address": "Johannes.Hirschbeck@hm.edu"
+        },
+        {
+            "_Kunde__name": "Franz Huber",
+            "_Kunde__mail_address": "Franz.Huber@hm.edu"
+        }
+    ]
+}

@@ -86,7 +86,7 @@ def add_room():
 def add_customer():
     print("\n---------Kunde hinzufügen---------")
     print("Aktuell gibt es folgende Kunden:")
-    RM.get_customers()
+    print(RM.get_customers())
     print("Mit dem Kommando 'Startmenü' kommen Sie zurück zum Startmenü.")
     print("Um einen neuen Kunden hinzuzufügen geben Sie bitte folgende Daten ein:")
     command = input("<Vorname Nachname> <E-Mail Adresse>:\n")
@@ -115,7 +115,7 @@ def add_customer():
 
 def show_customers():
     print("\n---------Kunden:---------")
-    RM.get_customers()
+    print(RM.get_customers())
     input("Bitte <Enter> drücken um zurück ins 'Startmenü' zu kommen:")
     return start_menu()
 
@@ -124,7 +124,7 @@ def book_room():
     print("Aktuell gibt es folgende Räume und Buchungen:")
     print(RM)
     print("Dazu gibt es folgende Kunden:")
-    RM.get_customers()
+    print(RM.get_customers())
     print("Mit dem Kommando 'Startmenü' kommen Sie zurück zum Startmenü.")
     print("Um einen Raum zu buchen geben Sie bitte folgende Daten ein:")
     command = input("<Raumnummer> <Kundenvorname Kundennachname>:\n")
@@ -151,7 +151,7 @@ def unbook_room():
     print("Aktuell gibt es folgende Räume und Buchungen:")
     print(RM)
     print("Dazu gibt es folgende Kunden:")
-    RM.get_customers()
+    print(RM.get_customers())
     print("Mit dem Kommando 'Startmenü' kommen Sie zurück zum Startmenü.")
     print("Um einen Raum freizugeben geben Sie bitte folgende Daten ein:")
 
@@ -197,7 +197,7 @@ def load():
     print("\n---------Laden---------")
     print("Mit dem Kommando 'Startmenü' kommen Sie zurück zum Startmenü.")
     print("Folgende gespeicherte Dateien sind vorhanden:")
-    print(glob.glob("*.json"))
+    print(files := glob.glob("*.json"))
     print("Um eine gespeicherte Datei zu laden geben Sie bitte folgendes ein:")
     command = input("<Dateiname.json>:\n")
     
@@ -211,6 +211,10 @@ def load():
 
     if len(input_data) != 1:
         print("\n---------Eingabe fehlerhaft!---------")
+        return load()
+    
+    if filename not in files:
+        print("\n---------Datei nicht vorhanden!---------")
         return load()
     
     terminal_stdout = sys.stdout

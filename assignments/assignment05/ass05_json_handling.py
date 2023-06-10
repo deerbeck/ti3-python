@@ -7,15 +7,19 @@ import json
 def safe_as_json(RM: Roommanagement, filename: str):
     #json conversion of data
     try:
+        #read objects with default handling of each object as __dict__ (gives back key and value pairs of attributes)
         data = json.dumps(RM, default=lambda x: x.__dict__, indent = 4)
+        #write data to given json file
         with open(filename, 'w', encoding="utf-8") as json_file:
             json_file.write(data)
             return 1
+    ##handle any errors while writing data
     except:
         return -1
-    
+
 def load_from_json(RM: Roommanagement, filename:str):
     try:
+        #open safed file and loop through each attribute and rebuild roommanagement object
         with open(filename, "r", encoding = "utf-8") as json_file:
             raw_RM = json.loads(json_file.read())
 
@@ -44,7 +48,8 @@ def load_from_json(RM: Roommanagement, filename:str):
                 if raw_room["_Raum__availability"] == "gebucht":
                     name = raw_room["_Raum__customer"]["_Kunde__name"]
                     RM.book_room(new_room, name)
-            return RM
+            return 1
+    ##handle any errors while reading data
     except:
         return -1
     
@@ -56,8 +61,6 @@ if __name__ == "__main__":
     classroom_1 = RM1.new_classroom("R0.003", 10, "Tafel")
     classroom_2 = RM1.new_classroom("R0.004", 20, "Projektor")
 
-
-        
     RM1.new_customer("Johannes Hirschbeck", "Johannes.Hirschbeck@hm.edu")
     RM1.new_customer("Franz Huber", "Franz.Huber@hm.edu")
 
@@ -69,10 +72,10 @@ if __name__ == "__main__":
     RM1.book_room("R0.004", "Johannes Hirschbec")
 
     data = json.dumps(RM1, default=lambda x: x.__dict__, indent = 4)
-    with open('roommanagement.json', 'w', encoding="utf-8") as json_file:
+    with open('roommanagement1234.json', 'w', encoding="utf-8") as json_file:
         json_file.write(data)
 
-    with open('roommanagement.json', "r", encoding = "utf-8") as json_file:
+    with open('roommanagement1234.json', "r", encoding = "utf-8") as json_file:
             raw_RM = json.loads(json_file.read())
             RM = Roommanagement()
             for raw_customer in raw_RM["_Roommanagement__customers"]:

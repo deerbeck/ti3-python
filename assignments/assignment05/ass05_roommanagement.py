@@ -45,8 +45,10 @@ class Roommanagement():
     
     #print out all customers with respective mail address
     def get_customers(self):
+        customers = ""
         for customer in self.__customers:
-            print(customer)
+            customers += str(customer) + "\n"
+        return(customers)
 
     # create new closet
     def new_closet(self, room_number: str, capacity: int, area: int) -> rooms.Abstellraum:
@@ -112,7 +114,7 @@ class Roommanagement():
                 return 1
         
         #return -1 if room does not exist
-        print(f"Raum {room_number.name} nicht vorhanden.")
+        print(f"Raum {room_number.room_number} nicht vorhanden.")
         return -1
 
     #helper method to get customer object only from name
@@ -212,6 +214,13 @@ class Roommanagement():
 
 
 if __name__ == "__main__":
+    # RM = Roommanagement()
+
+    # RM.new_customer("Johannes Hirschbeck", "Johannes.Hirschbeck@hm.edu")
+    # RM.new_customer("Franz Huber", "Franz.Huber@hm.edu")
+    # RM.new_customer("Sebastian Ringlstetter", "Sebastian.Ringlstetter@hm.edu")
+    
+    # print(RM.get_customers())
     # RM = Roommanagement()
     # meeting_1 = RM.new_meetingroom("R0.001", 20)
     # closet_1 = RM.new_closet("R0.002", 10, 20)
