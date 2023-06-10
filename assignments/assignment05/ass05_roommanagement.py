@@ -17,32 +17,36 @@ class Roommanagement():
             if indiv_customer.name == name:
                 print(f"Kunde konnte nicht hinzugefügt werden --> Kunde {name} bereits angelegt.")
                 return -1
+        print(f"Kunde {name} erfolgreich angelegt.")
         self.__customers.append(custom := customer.Kunde(name, mail_address))
         return custom
     
     def remove_customer(self, name):
-        if type(name) != str:
-            for indiv_customer in self.__customers:
-                if indiv_customer.name == name:
-                    ##remove customer from list and print out to terminal for better track keeping
-                    print(f"Kunde {indiv_customer.name} wurde entfernt.")
-                    self.__customers.remove(indiv_customer)
-                    return 1
-        else:
-            for indiv_customer in self.__customers:
-                if indiv_customer.name == name:
-                    ##remove customer from list and print out to terminal for better track keeping
-                    print(f"Kunde {indiv_customer.name} wurde entfernt.")
-                    self.__customers.remove(indiv_customer)
-                    return 1
+        if type(name) == str:
+            customer_name = customer
+            if (customer := self.__get_customer_from_name(customer_name)) == -1:
+                print(f"Kunde {customer_name} nicht vorhanden.")
+                return -1
+        
+        for indiv_customer in self.__customers:
+            if indiv_customer.name == name:
+                ##remove customer from list and print out to terminal for better track keeping
+                print(f"Kunde {indiv_customer.name} wurde entfernt.")
+                self.__customers.remove(indiv_customer)
+                return 1
         #return -1 if customer does not exist
-        print("Kunde nicht vorhanden.")
+        print(f"Kunde {indiv_customer.name} nicht vorhanden.")
         return -1
     
     #getter for customers    
     @property
     def customers(self):
         return self.__customers
+    
+    #print out all customers with respective mail address
+    def get_customers(self):
+        for customer in self.__customers:
+            print(customer)
 
     # create new closet
     def new_closet(self, room_number: str, capacity: int, area: int) -> rooms.Abstellraum:
@@ -54,6 +58,7 @@ class Roommanagement():
         #append room to roomslist of roommanagement
         self.__rooms.append(closet := rooms.Abstellraum(
             room_number, capacity, area))
+        print(f"Abstellraum {room_number} wurde angelegt.")
         #return room object
         return closet
 
@@ -67,6 +72,7 @@ class Roommanagement():
         #append room to roomslist of roommanagement
         self.__rooms.append(classroom := rooms.Vorlesungsraum(
             room_number, capacity, presentation_medium))
+        print(f"Vorlesungsraum {room_number} wurde angelegt.")
         #return room object
         return classroom
 
@@ -80,6 +86,7 @@ class Roommanagement():
         #append room to roomslist of roommanagement
         self.__rooms.append(
             meetingroom := rooms.Meetingraum(room_number, capacity))
+        print(f"Meetingraum {room_number} wurde angelegt.")
         #return room object
         return meetingroom
 
@@ -91,22 +98,21 @@ class Roommanagement():
     def remove_room(self, room_number):
         # can either enter "room_number" or room object that should be removed
         # "room_number" can be object of a room as well
-        if type(room_number) != str:
-            for room in self.__rooms:
-                if room == room_number:
-                    ##remove room from list and print out to terminal for better track keeping
-                    print(f"Raum {room.room_number} wurde entfernt.")
-                    self.__rooms.remove(room)
-                    return 1
-        else:
-            for room in self.__rooms:
-                if room.room_number == room_number:
-                    ##remove room from list and print out to terminal for better track keeping
-                    print(f"Raum {room.room_number} wurde entfernt.")
-                    self.__rooms.remove(room)
-                    return 1
+        if type(room_number) == str:
+            room_name = room_number
+            if (room_number := self.__get_room_from_number(room_name)) == -1:
+                print(f"Raum {room_name} nicht vorhanden.")
+                return -1
+        
+        for room in self.__rooms:
+            if room == room_number:
+                ##remove room from list and print out to terminal for better track keeping
+                print(f"Raum {room.room_number} wurde entfernt.")
+                self.__rooms.remove(room)
+                return 1
+        
         #return -1 if room does not exist
-        print("Raum nicht vorhanden.")
+        print(f"Raum {room_number.name} nicht vorhanden.")
         return -1
 
     #helper method to get customer object only from name
