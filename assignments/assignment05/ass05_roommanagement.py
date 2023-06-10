@@ -7,10 +7,42 @@ import ass05_customer as customer
 
 class Roommanagement():
     """Raumverwaltungsobjekt um Räume einzusehen, hinzuzufügen sowie zu entfernen."""
-
     def __init__(self) -> None:
         #initialize with empty rooms list to later add new rooms to
         self.__rooms = []
+        self.__customers = []
+
+    def new_customer(self, name, mail_address):
+        for indiv_customer in self.__customers:
+            if indiv_customer.name == name:
+                print(f"Kunde konnte nicht hinzugefügt werden --> Kunde {name} bereits angelegt.")
+                return -1
+        self.__customers.append(custom := customer.Kunde(name, mail_address))
+        return custom
+    
+    def remove_customer(self, name):
+        if type(name) != str:
+            for indiv_customer in self.__customers:
+                if indiv_customer.name == name:
+                    ##remove customer from list and print out to terminal for better track keeping
+                    print(f"Kunde {indiv_customer.name} wurde entfernt.")
+                    self.__customers.remove(indiv_customer)
+                    return 1
+        else:
+            for indiv_customer in self.__customers:
+                if indiv_customer.name == name:
+                    ##remove customer from list and print out to terminal for better track keeping
+                    print(f"Kunde {indiv_customer.name} wurde entfernt.")
+                    self.__customers.remove(indiv_customer)
+                    return 1
+        #return -1 if customer does not exist
+        print("Kunde nicht vorhanden.")
+        return -1
+    
+    #getter for customers    
+    @property
+    def customers(self):
+        return self.__customers
 
     # create new closet
     def new_closet(self, room_number: str, capacity: int, area: int) -> rooms.Abstellraum:
@@ -77,69 +109,71 @@ class Roommanagement():
         print("Raum nicht vorhanden.")
         return -1
 
+    #helper method to get customer object only from name
+    def __get_customer_from_name(self, name):
+        for indiv_customer in self.__customers:
+            if indiv_customer.name == name:
+                return indiv_customer
+        return -1
+    #helper method to get room object from room_number
+    def __get_room_from_number(self, room_number):
+        for room in self.__rooms:
+            if room.room_number == room_number:
+                return room
+        return -1
+
     # book room in Roommanagement
     def book_room(self, room_number, customer):
         # can either enter "room_number" or room object that should be booked
         # "room_number" can be object of a room as well
-        if type(room_number) != str:
-            # check if room is already booked
-            if room_number.availability == "gebucht":
-                print(f"Raum {room_number.room_number} bereits belegt.")
+
+        # handle if only room_number is given
+        if type(room_number) == str:
+            room_name = room_number
+            if (room_number := self.__get_room_from_number(room_name)) == -1:
+                print(f"Raum {room_name} nicht vorhanden.")
+                return -1
+
+        # check if room is already booked
+        if room_number.availability == "gebucht":
+            print(f"Raum {room_number.room_number} bereits belegt.")
+            return -1
+        
+        #Handle if only name of customer is given
+        if type(customer) == str:
+            customer_name = customer
+            if (customer := self.__get_customer_from_name(customer_name)) == -1:
+                print(f"Kunde {customer_name} nicht vorhanden.")
                 return -1
             
-            # book room otherwise
-            room_number.availability = "gebucht"
-            #set room property customer to provided customer
-            room_number.customer = customer
-            print(f"Raum {room_number.room_number} erfolgreich von {customer.name} gebucht.")
-            return 1
-
-        else:
-            for room in self.__rooms:
-                if room.room_number == room_number:
-                    # check if room is already booked
-                    if room.availability == "gebucht":
-                        print(f"Raum {room.room_number} bereits belegt.")
-                        return -1
-                    
-                    # book room otherwise
-                    room.availability = "gebucht"
-                    #set room property customer to provided customer
-                    room.customer = customer
-                    print(f"Raum {room.room_number} erfolgreich von {customer.name} gebucht.")
-                    return 1
-        #return -1 if room is not available
-        print("Raum nicht vorhanden.")
-        return -1
+        
+        # book room otherwise
+        room_number.availability = "gebucht"
+        #set room property customer to provided customer
+        room_number.customer = customer
+        print(f"Raum {room_number.room_number} erfolgreich von {customer.name} gebucht.")
+        return 1
 
     # unbook room in Roommanagement
     def unbook_room(self, room_number):
         # can either enter "room_number" or room object that should be booked
         # "room_number" can be object of a room as well
-        if type(room_number) != str:
-            #change room availability
-            room_number.availability = "verfügbar"
-            #resset booked room by customer to None
-            room_number.customer = None
-            #terminal printout for easier track keeping
-            print(f"Raum {room_number.room_number} ist jetzt frei.")
-            return 1
-        else:
-            for room in self.__rooms:
-                if room.room_number == room_number:
-                    #change room availability
-                    room.availability = "verfügbar"
-                    #resset booked room by customer to None
-                    room.customer = None
-                    #terminal printout for easier track keeping
-                    print(f"Raum {room.room_number} ist jetzt frei.")
-                    return 1
-        #return -1 if room is not available
-        print("Raum nicht vorhanden.")
-        return -1
+        # handle if only room_number is given
+        if type(room_number) == str:
+            room_name = room_number
+            if (room_number := self.__get_room_from_number(room_name)) == -1:
+                print(f"Raum {room_name} nicht vorhanden.")
+                return -1
+            
+        #change room availability
+        room_number.availability = "verfügbar"
+        #resset booked room by customer to None
+        room_number.customer = None
+        #terminal printout for easier track keeping
+        print(f"Raum {room_number.room_number} ist jetzt frei.")
+        return 1
 
     # return all managed rooms and the respective properties
-
     def __str__(self) -> str:
         ##preparing printout of contained rooms
         closets = "Abstellräume: \n-------------\n"

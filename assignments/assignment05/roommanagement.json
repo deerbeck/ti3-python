@@ -24,11 +24,8 @@
         {
             "_Raum__room_number": "R0.003",
             "_Raum__capacity": 10,
-            "_Raum__availability": "gebucht",
-            "_Raum__customer": {
-                "_Kunde__name": "Johannes Hirschbeck",
-                "_Kunde__mail_address": "Johannes.Hirschbeck@hm.edu"
-            },
+            "_Raum__availability": "verf\u00fcgbar",
+            "_Raum__customer": null,
             "_Raum__room_type": "Vorlesungsraum",
             "_Vorlesungsraum__presentation_medium": "Tafel"
         },
@@ -39,6 +36,16 @@
             "_Raum__customer": null,
             "_Raum__room_type": "Vorlesungsraum",
             "_Vorlesungsraum__presentation_medium": "Projektor"
+        }
+    ],
+    "_Roommanagement__customers": [
+        {
+            "_Kunde__name": "Johannes Hirschbeck",
+            "_Kunde__mail_address": "Johannes.Hirschbeck@hm.edu"
+        },
+        {
+            "_Kunde__name": "Franz Huber",
+            "_Kunde__mail_address": "Franz.Huber@hm.edu"
         }
     ]
 }
