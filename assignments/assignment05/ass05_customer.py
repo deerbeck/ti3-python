@@ -3,7 +3,7 @@ import ass05_roommanagement as roommanagement
 
 class Kunde():
 
-    def __init__(self, name, mail_address) -> None:
+    def __init__(self, name :str, mail_address :str) -> None:
         #initialize name and mail address
         self.name = name
         self.mail_address = mail_address

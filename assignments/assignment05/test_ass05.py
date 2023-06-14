@@ -33,7 +33,7 @@ def test_codequality():
 
     assert nloc != 0
     print("#comments:",ncomments,"#loc:",nloc, "#comments/#loc:", ncomments / nloc)
-    assert ncomments / nloc >= 0.1
+    assert ncomments / nloc >= 0.25
 
 
 def test_commit_messages():

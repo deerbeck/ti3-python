@@ -2,10 +2,13 @@ from ass05_rooms import *
 from ass05_roommanagement import *
 from ass05_customer import *
 from ass05_json_handling import *
+from ass05_plotting import *
+from matplotlib import pyplot as plt
 import glob
 import sys
 import os
 
+##self explainatory through the given strings
 
 def start_menu():
     
@@ -13,29 +16,29 @@ def start_menu():
     print("Willkommen im Raumverwaltungssystem der Hochschule München.")
     print("Aktuell besitzt ihr Raumverwaltungssystem folgende Räume, sowie Buchungen:\n" + str(RM) + "\n")
     print("Bitte geben Sie Ihre gewünschte Aktion ein:")
-    command = input("'Raum hinzufügen' | 'Kunde hinzufügen' | 'Kunden anzeigen' | 'Raum buchen' | 'Raum freigeben' | 'Speichern' | 'Laden' | 'Beenden'\n")
+    command = input("'Raum hinzufügen' | 'Kunde hinzufügen' | 'Kunden anzeigen' | 'Raum buchen' | 'Raum freigeben' | 'Speichern' | 'Laden' | 'Plotting' | 'Beenden'\n")
     
     if command == "Raum hinzufügen":
         return add_room()
-    if command == "Kunde hinzufügen":
+    elif command == "Kunde hinzufügen":
         return add_customer()
-    if command == "Kunden anzeigen":
+    elif command == "Kunden anzeigen":
         return show_customers()
-    if command == "Raum buchen":
+    elif command == "Raum buchen":
         return book_room()
-    if command == "Raum freigeben":
+    elif command == "Raum freigeben":
         return unbook_room()
-    if command == "Speichern":
+    elif command == "Speichern":
         return safe()
-    if command == "Laden":
+    elif command == "Laden":
         return load()
-    if command == "Beenden":
+    elif command == "Beenden":
         return shutdown()
+    elif command == "Plotting":
+        return plotting()
     else:
         print("\n---------Eingabe fehlerhaft!---------")
         return start_menu()
-
-
 
 
 
@@ -83,6 +86,7 @@ def add_room():
         return add_room()
 
 
+
 def add_customer():
     print("\n---------Kunde hinzufügen---------")
     print("Aktuell gibt es folgende Kunden:")
@@ -113,11 +117,13 @@ def add_customer():
 
     return start_menu()
 
+
 def show_customers():
     print("\n---------Kunden:---------")
     print(RM.get_customers())
     input("Bitte <Enter> drücken um zurück ins 'Startmenü' zu kommen:")
     return start_menu()
+
 
 def book_room():
     print("\n---------Raum buchen---------")
@@ -146,6 +152,7 @@ def book_room():
     
     return start_menu()
 
+
 def unbook_room():
     print("\n---------Raum freigeben---------")
     print("Aktuell gibt es folgende Räume und Buchungen:")
@@ -170,6 +177,7 @@ def unbook_room():
     
     if RM.unbook_room(room_number) == -1:
         return unbook_room()
+
 
 def safe():
     print("\n---------Speichern---------")
@@ -228,6 +236,34 @@ def load():
     print("\n---------Erfolgreich geladen!---------")
     return start_menu()
     
+
+
+def plotting():
+    print("\n---------Raum-Plotting---------")
+    print("Willkommen im Plotting-Menü.")
+    print("Mit dem Kommando 'Startmenü' kommen Sie zurück zum Startmenü.")
+    print("Bitte geben Sie Ihre gewünschte Aktion ein:")
+    command = input("'Überischt' | 'Verfügbarkeiten'\n")
+
+    if command == "Startmenü":
+        print("\n---------Zurück ins Startmenü!---------")
+        return start_menu()
+    
+    elif command == "Übersicht":
+        plot_rooms(RM)
+        return plotting() 
+    
+    elif command == "Verfügbarkeiten":
+        plot_availability(RM)
+        return plotting() 
+    
+    else:
+        print("\n---------Eingabe fehlerhaft!---------")
+        return plotting()
+
+
+    pass
+    
 def shutdown():
     print("\n---------Beenden---------")
     print("Mit dem Kommando 'Startmenü' kommen Sie zurück zum Startmenü.")
@@ -250,6 +286,7 @@ def shutdown():
     
     if command == "Beenden":
         print("\n---------Programm beendet!---------")
+        plt.close('all')
         return 0
 
     if len(input_data) != 1:

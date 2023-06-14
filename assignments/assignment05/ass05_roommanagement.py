@@ -12,22 +12,51 @@ class Roommanagement():
         self.__rooms = []
         self.__customers = []
 
+    #getter for customers    
+    @property
+    def customers(self):
+        return self.__customers
+    
+    #getter for rooms
+    def rooms(self):
+        return self.__rooms
+    
+        #helper method to get customer object only from name string
+    def __get_customer_from_name(self, name):
+        for indiv_customer in self.__customers:
+            if indiv_customer.name == name:
+                return indiv_customer
+        return -1
+    #helper method to get room object from room_number string
+    def __get_room_from_number(self, room_number):
+        for room in self.__rooms:
+            if room.room_number == room_number:
+                return room
+        return -1
+
+    
     def new_customer(self, name, mail_address):
+        #create new customer and check beforehand if customer already exists
         for indiv_customer in self.__customers:
             if indiv_customer.name == name:
                 print(f"Kunde konnte nicht hinzugefügt werden --> Kunde {name} bereits angelegt.")
                 return -1
+        #append customer to list
         print(f"Kunde {name} erfolgreich angelegt.")
         self.__customers.append(custom := customer.Kunde(name, mail_address))
         return custom
     
     def remove_customer(self, name):
+        #handle customer name 
         if type(name) == str:
+            #buffer string of customer name
             customer_name = customer
+            #get customer object with helper function
             if (customer := self.__get_customer_from_name(customer_name)) == -1:
                 print(f"Kunde {customer_name} nicht vorhanden.")
                 return -1
         
+        #loop through the customer list and remove the respective customer
         for indiv_customer in self.__customers:
             if indiv_customer.name == name:
                 ##remove customer from list and print out to terminal for better track keeping
@@ -38,25 +67,24 @@ class Roommanagement():
         print(f"Kunde {indiv_customer.name} nicht vorhanden.")
         return -1
     
-    #getter for customers    
-    @property
-    def customers(self):
-        return self.__customers
-    
     #print out all customers with respective mail address
     def get_customers(self):
+        #buffer string to be filled with customer info
         customers = ""
+
+        #loop through customer and get str information
         for customer in self.__customers:
             customers += str(customer) + "\n"
         return(customers)
 
     # create new closet
-    def new_closet(self, room_number: str, capacity: int, area: int) -> rooms.Abstellraum:
+    def new_closet(self, room_number: str, capacity: int, area: int):
         for room in self.__rooms:
             if room.room_number == room_number:
                 #case when room_number is already taken
                 print(f"Raum konnte nicht hinzugefügt werden --> Raumnummer {room_number} bereits vergeben.")
                 return -1
+            
         #append room to roomslist of roommanagement
         self.__rooms.append(closet := rooms.Abstellraum(
             room_number, capacity, area))
@@ -65,7 +93,7 @@ class Roommanagement():
         return closet
 
     # create new classroom
-    def new_classroom(self, room_number: str, capacity: int, presentation_medium: int) -> rooms.Vorlesungsraum:
+    def new_classroom(self, room_number: str, capacity: int, presentation_medium: int):
         for room in self.__rooms:
             if room.room_number == room_number:
                 #case when room_number is already taken
@@ -79,7 +107,7 @@ class Roommanagement():
         return classroom
 
     # create new meetingroom
-    def new_meetingroom(self, room_number: str, capacity: int) -> rooms.Meetingraum:
+    def new_meetingroom(self, room_number: str, capacity: int):
         for room in self.__rooms:
             if room.room_number == room_number:
                 #case when room_number is already taken
@@ -101,11 +129,14 @@ class Roommanagement():
         # can either enter "room_number" or room object that should be removed
         # "room_number" can be object of a room as well
         if type(room_number) == str:
+            #buffer name of room which normally is string of the room_number
             room_name = room_number
+            #use helperfunction to get room via name from the room list and assign object to room_number variable
             if (room_number := self.__get_room_from_number(room_name)) == -1:
                 print(f"Raum {room_name} nicht vorhanden.")
                 return -1
         
+        #loop through all room objects and remove the respective room
         for room in self.__rooms:
             if room == room_number:
                 ##remove room from list and print out to terminal for better track keeping
@@ -115,19 +146,6 @@ class Roommanagement():
         
         #return -1 if room does not exist
         print(f"Raum {room_number.room_number} nicht vorhanden.")
-        return -1
-
-    #helper method to get customer object only from name
-    def __get_customer_from_name(self, name):
-        for indiv_customer in self.__customers:
-            if indiv_customer.name == name:
-                return indiv_customer
-        return -1
-    #helper method to get room object from room_number
-    def __get_room_from_number(self, room_number):
-        for room in self.__rooms:
-            if room.room_number == room_number:
-                return room
         return -1
 
     # book room in Roommanagement
