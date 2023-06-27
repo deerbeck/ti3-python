@@ -1,0 +1,6 @@
+Mustermann 80 85 90
+Müller 95 92 88
+Schmidt 78 85 80
+Wagner 92 89 94
+Weber 87 90 92
+Schmitt 83 88 85
