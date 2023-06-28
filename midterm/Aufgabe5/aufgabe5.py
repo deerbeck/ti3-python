@@ -32,4 +32,19 @@ from time import time
 
 
 class MyTimer:
-    pass
+    def __init__(self, title:str) -> None:
+        self.__title = title
+        self.__start = 0
+        self.__end = 0
+
+    def __enter__(self):
+        self.__start = time()
+
+    def __exit__(self,exc_type,exc_value,traceback):
+        self.__end = time()
+        print(f"Der Timer {self.__title} wurde beendet und hat folgende Systemzeit gemessen: {(self.__end - self.__start):3f} s")
+
+
+if __name__ == "__main__":
+    with MyTimer("Test"):
+        erg = [x for x in range(10000000)]

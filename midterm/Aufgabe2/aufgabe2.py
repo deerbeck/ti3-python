@@ -11,4 +11,7 @@ die aus dem komprimierten String die ursprüngliche Zeichenkette wiederherstellt
 
 
 def uncompress_rec(s_comp):
-    pass
+    return s_comp[0]*int(s_comp[1]) if len(s_comp) == 2 else s_comp[0]*int(s_comp[1]) + uncompress_rec(s_comp[2:])
+
+if __name__ == "__main__":
+    print(uncompress_rec("a4b3c2a1"))

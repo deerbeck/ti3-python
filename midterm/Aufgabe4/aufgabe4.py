@@ -18,7 +18,50 @@ Schritte der Implementierung:
 • Speichern Sie die Datensätze der beiden Dateien in Listen zwischen.
 • Verschmelzen Sie die Datensätze mit dem Merge-Algorithmus zu einer Gesamt-Liste.
 '''
+def get_alphabet_order(n1, n2):
+    if n1 == n2:
+        return 0
+    else:
+        for symbol1,symbol2 in zip(n1,n2):
+            if symbol1 < symbol2:
+                return 1
+            elif symbol1 > symbol2:
+                return -1
+            
+
 
 
 if __name__ == '__main__':
-    pass
+    with open("Aufgabe4/firmaA.csv", "r") as fA:
+        with open("Aufgabe4/firmaB.csv","r") as fB:
+            companyA = fA.readlines()
+            companyB = fB.readlines()
+
+            indxA = 0
+            indxB = 0
+
+            newCompany = []
+            maxA = len(companyA)
+            maxB = len(companyB)
+
+            max = maxA if maxA<maxB else maxB
+            while(indxA < max and indxB < max):
+                order = get_alphabet_order(companyA[indxA],companyB[indxB])
+                if order == 0:
+                    newCompany.append(companyA[indxA])
+                    indxA += 1
+                    indxB += 1
+                elif order == 1:
+                    newCompany.append(companyA[indxA])
+                    indxA += 1
+                elif order == -1:
+                    newCompany.append(companyB[indxB])
+                    indxB +=1
+            if indxA == max:
+                for man in companyB[indxB:]:
+                    newCompany.append(man)
+            elif indxB == max:
+                for man in companyA[indxA:]:
+                    newCompany.append(man)
+            with open("Aufgabe4/newCompany.csv","w") as Fnew:
+                Fnew.write("".join(newCompany))

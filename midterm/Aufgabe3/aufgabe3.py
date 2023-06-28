@@ -19,4 +19,16 @@ Der Einfachheit halber kann man voraussetzen, dass das übergebene wort nur aus 
 
 
 def caesar(wort, verschiebung):
-    pass
+    newword = ""
+    code = [ord(c)-ord('a') for c in wort]
+    newword = [(c + verschiebung) % 26 for c in code]
+    output = [chr(c + ord("a")) for c in newword]
+
+    return "".join(output)
+
+
+if __name__ == "__main__":
+    test = caesar("halloz", 4)
+    test2 = caesar(test, -4)
+    print(test)
+    print(test2)
