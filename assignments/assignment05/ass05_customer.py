@@ -5,8 +5,8 @@ class Kunde():
 
     def __init__(self, name :str, mail_address :str) -> None:
         #initialize name and mail address
-        self.name = name
-        self.mail_address = mail_address
+        self.__name = name
+        self.__mail_address = mail_address
 
     #getter for customer name
     @property

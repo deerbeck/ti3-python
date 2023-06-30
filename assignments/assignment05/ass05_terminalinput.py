@@ -62,7 +62,7 @@ def add_room():
         return add_room()
 
     room_number = input_data[0]
-    capacity = input_data[1]
+    capacity = int(input_data[1])
     room_type = input_data[2]
     if type(capacity) != int:
         print("\n---------Kapazität muss eine Ganzzahl sein!---------")
@@ -140,7 +140,7 @@ def book_room():
         print("\n---------Zurück ins Startmenü!---------")
         return start_menu()
 
-    if len(input_data) != 1:
+    if len(input_data) != 3:
         print("\n---------Eingabe fehlerhaft!---------")
         return book_room()
     

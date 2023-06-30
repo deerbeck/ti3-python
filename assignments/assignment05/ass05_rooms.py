@@ -9,10 +9,10 @@ class Raum(ABC):
     @abstractmethod
     def __init__(self, room_number: str, capacity: int) -> None:
         #initializer properties of default room
-        self.room_number = room_number
-        self.capacity = capacity
-        self.availability = "verfügbar"
-        self.customer = None
+        self.__room_number = room_number
+        self.__capacity = capacity
+        self.__availability = "verfügbar"
+        self.__customer = None
         self.__room_type = type(self).__name__
 
     # setter/gettter room_number
