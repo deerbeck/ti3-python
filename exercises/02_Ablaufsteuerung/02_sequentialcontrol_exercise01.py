@@ -1,6 +1,6 @@
-# largest common devisor
+# greatest common devisor
 
-# define function to calculate lcd
+# define function to calculate gcd
 
 def ggt(a: int, b: int):
     a_start = a

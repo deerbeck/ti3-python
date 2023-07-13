@@ -8,39 +8,27 @@ class EmptyStackException(Exception):
     def __str__(self):
         return f"{self.__class__.__name__}: {self.message}, caused by {self.expression}"
 
-class Stack:
-
-    def __init__(self, elements = []) -> None:
-        self.elements = elements
+class Stack():
+    def __init__(self) -> None:
+        self.__elements = []
     
-    def push(self, element) -> None:
-        """Place element on the stack."""
-        ##Place element on the stack.
-        self.elements.append(element)
-        
+    def push(self, element):
+        self.__elements.append(element)
     def pop(self):
-        """Return last element on the stack and remove it from the stack."""
-        ##Return last element on the stack and remove it from the stack.
-        if self.size() <= 0:
+        try:
+            return self.__elements.pop()
+        except IndexError:
             raise EmptyStackException("pop() on empty Stack", "Stack is empty")
-        else:
-            return self.elements.pop()
-    
     def peek(self):
-        """Return last element, but do not remove it from the stack."""
-        ##Return last element, but do not remove it from the stack.
-        if self.size() <= 0:
+        try:
+            return self.__elements[-1]
+        except IndexError:
             raise EmptyStackException("peek() on empty Stack", "Stack is empty")
-        
-        else:
-            return self.elements[-1]
-    
-    def size(self) -> int:
-        """Return the size of the stack (number of elements)."""
-        ##Return the size of the stack (number of elements).
-        return len(self.elements)
-    
-
+    def size(self):
+        return len(self.__elements)
+  
+  
+  
 
 # Tests für Stack
 class StackTest(unittest.TestCase):

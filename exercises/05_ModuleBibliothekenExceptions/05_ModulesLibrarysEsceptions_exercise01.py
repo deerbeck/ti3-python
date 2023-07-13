@@ -23,5 +23,3 @@ with open("anagram.txt", "r") as infile, open("anagram_output.txt", "w") as outf
     #filter the whole anagram list to only save the first appearence of the anagram
     for w,c in filter(lambda x:x[0] in filter_list ,anagram_list):
         outfile.write(f"{w};{c}\n")
-    
-    
